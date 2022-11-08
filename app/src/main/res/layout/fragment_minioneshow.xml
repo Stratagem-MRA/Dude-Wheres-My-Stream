@@ -43,7 +43,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/seeMoreButton"
             android:layout_margin="12dp"/>
-        <!--TODO not sure how to dynamically add items to linear layout-->
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"

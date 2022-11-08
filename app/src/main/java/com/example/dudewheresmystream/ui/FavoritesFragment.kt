@@ -36,7 +36,6 @@ class FavoritesFragment: Fragment() {
         })
 
         adapter.setOnItemClickListener {
-            //TODO favorite show has been clicked need to pull up minioneshow
             setFragmentResult("displayMiniOneShow", bundleOf("data" to it,"source" to "Favorites"))
         }
         return adapter

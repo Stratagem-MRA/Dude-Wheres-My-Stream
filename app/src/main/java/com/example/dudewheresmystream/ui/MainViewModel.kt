@@ -29,7 +29,7 @@ class MainViewModel: ViewModel() {
     init{
         //TODO refresh trending vods
         if(MainActivity.globalDebug){
-            //TODO what do we want to call here if debugging? submit lists perhaps?
+            //MainActivity handles submitting debug lists this can remain empty for future testing purposes
         }
         else {
             tmdbRefresh()
@@ -66,13 +66,11 @@ class MainViewModel: ViewModel() {
     fun postFavorite(show: VideoData){
         favorites.value!!.add(show)
         favorites.value = favorites.value
-        //TODO double check this triggers the listener
     }
     fun removeFavorite(show: VideoData){
         val index = favorites.value!!.indexOf(show)
         favorites.value!!.removeAt(index)
         favorites.value = favorites.value
-        //TODO may need to add search functionality here
     }
 
     fun observeTrending(): MutableLiveData<List<VideoData>> {

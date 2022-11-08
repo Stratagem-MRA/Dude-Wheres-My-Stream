@@ -26,7 +26,7 @@ class ShowColumnAdapter(private val viewModel: MainViewModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val columnBinding = ColumnBinding.inflate(LayoutInflater.from(parent.context),parent,false)//TODO still dont know what attach to parent does
+        val columnBinding = ColumnBinding.inflate(LayoutInflater.from(parent.context),parent,false)
 
         return VH(columnBinding)
     }
@@ -48,7 +48,7 @@ class ShowColumnAdapter(private val viewModel: MainViewModel)
 
     class VideoDiff : DiffUtil.ItemCallback<VideoData>(){
         override fun areItemsTheSame(oldItem: VideoData, newItem: VideoData): Boolean {
-            return oldItem.title == newItem.title //TODO might need to change this as multiple shows may have the same title???
+            return oldItem.title == newItem.title //TODO might need to change this as multiple shows may have the same title??? .key may be appropriate depending on implementation
         }
         override fun areContentsTheSame(oldItem: VideoData, newItem: VideoData): Boolean {
             return VideoData.spannableStringsEqual(oldItem.title,newItem.title) &&

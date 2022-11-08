@@ -3,6 +3,7 @@ package com.example.dudewheresmystream.api
 import android.text.SpannableString
 import com.google.gson.annotations.SerializedName
 //TODO this should combine the Stream API and TMDB api information together
+//TODO add info based on whats available in api such as director, actors, etc.
 
 data class VideoData(
     @SerializedName("name")

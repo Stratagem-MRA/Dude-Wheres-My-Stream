@@ -53,7 +53,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/FavoritesTV"
             tools:layout="@layout/fragment_rv_horizontal" />
-        <!--TODO clicking an item here should open up the minioneshow layout centered with bg dimmed-->
     </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:layout_width="match_parent"
@@ -63,7 +62,6 @@
         android:alpha="0.75"
         android:clickable="false"
         android:visibility="invisible"/>
-    <!--TODO using two constraint views like this feels hacky maybe there's a better solution?-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

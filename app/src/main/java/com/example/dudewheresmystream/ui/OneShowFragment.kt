@@ -1,30 +1,28 @@
 package com.example.dudewheresmystream.ui
 
 import android.os.Bundle
-import android.util.Log
+import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.addCallback
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commit
 import com.example.dudewheresmystream.R
 import com.example.dudewheresmystream.api.VideoData
 import com.example.dudewheresmystream.databinding.FragmentMinioneshowBinding
+import com.example.dudewheresmystream.databinding.FragmentOneshowBinding
+import com.example.dudewheresmystream.databinding.FragmentRvHorizontalBinding
 import com.example.dudewheresmystream.glide.Glide
 
-class MiniOneShowFragment(private val data: VideoData) : Fragment() {
+class OneShowFragment(private val data: VideoData): Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
-    private var _binding: FragmentMinioneshowBinding? = null
+    private var _binding: FragmentOneshowBinding? = null
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance(data: VideoData): MiniOneShowFragment {
-            return MiniOneShowFragment(data)
+        fun newInstance(data: VideoData): OneShowFragment {
+            return OneShowFragment(data)
         }
     }
 
@@ -33,28 +31,17 @@ class MiniOneShowFragment(private val data: VideoData) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMinioneshowBinding.inflate(inflater, container, false)
+        _binding = FragmentOneshowBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.glideFetch(data.thumbnailURL,binding.thumbnail)
-        binding.infoTV.text = data.description
+        Glide.glideFetch(data.thumbnailURL,binding.thumbnail) //TODO should we be caching these or fetching from web each time?
+        binding.infoTV.text = data.description //TODO we probably need to add individual elements to handle styling of text such as bolding titles etc.
         binding.title.text = data.title
-        binding.seeMoreButton.setOnClickListener { launchSeeMore() }
         initializeFavorite()
-        setBackButton()
         addlinks()
-    }
-
-    private fun addlinks(){
-        //TODO update this once we have live streaming links TextView is inappropriate
-        for (item in data.streamingURLs){
-            val TV = TextView(this.context)
-            TV.text = item
-            binding.linkContainer.addView(TV)
-        }
     }
 
     private fun initializeFavorite(){
@@ -78,19 +65,14 @@ class MiniOneShowFragment(private val data: VideoData) : Fragment() {
             }
         }
     }
-    private fun setBackButton(){
-        requireActivity().onBackPressedDispatcher.addCallback(this){
-            for (i: Int in 1..parentFragmentManager.backStackEntryCount) {
-                parentFragmentManager.popBackStack()
-            }
+
+    private fun addlinks(){
+        //TODO update this once we have live streaming links TextView is inappropriate
+        for (item in data.streamingURLs){
+            val TV = TextView(this.context)
+            TV.text = item
+            binding.linkContainer.addView(TV)
         }
     }
-    private fun launchSeeMore(){
-        parentFragmentManager.popBackStack()
-        requireActivity().supportFragmentManager.commit {
-            replace(R.id.main_frame, OneShowFragment.newInstance(data), "OneShow")
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            addToBackStack("OneShow")
-        }
-    }
+
 }

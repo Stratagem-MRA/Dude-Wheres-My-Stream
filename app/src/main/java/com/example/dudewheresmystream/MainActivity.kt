@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     private fun actionBarSearch(){
         actionBarBinding!!.actionSearch.addTextChangedListener {
             //TODO implement search functionality here
-            //TODO may be different depending on which fragment we're in
+            //TODO functionality should be the same across fragments and should have bar hidden in settings fragment
         }
     }
 
@@ -100,9 +100,6 @@ class MainActivity : AppCompatActivity() {
                 VideoData("Key-7", SpannableString("Chucky"),"https://www.themoviedb.org/t/p/w440_and_h660_face/kY0BogCM8SkNJ0MNiHB3VTM86Tz.jpg",SpannableString("After a vintage Chucky doll turns up at a suburban yard sale, an idyllic American town is thrown into chaos as a series of horrifying murders begin to expose the town’s hypocrisies and secrets. Meanwhile, the arrival of enemies — and allies — from Chucky’s past threatens to expose the truth behind the killings, as well as the demon doll’s untold origins."),listOf<String>()),
                 VideoData("Key-8", SpannableString("Coco"),"https://www.themoviedb.org/t/p/w440_and_h660_face/gGEsBPAijhVUFoiNpgZXqRVWJt2.jpg",SpannableString("Despite his family’s baffling generations-old ban on music, Miguel dreams of becoming an accomplished musician like his idol, Ernesto de la Cruz. Desperate to prove his talent, Miguel finds himself in the stunning and colorful Land of the Dead following a mysterious chain of events. Along the way, he meets charming trickster Hector, and together, they set off on an extraordinary journey to unlock the real story behind Miguel's family history."),listOf<String>()),
                 VideoData("Key-9", SpannableString("Halloween Ends"),"https://www.themoviedb.org/t/p/w440_and_h660_face/h1FGQ6FRW6kNx4ACxjCJ18ssW3Y.jpg",SpannableString("Four years after the events of Halloween in 2018, Laurie has decided to liberate herself from fear and rage and embrace life. But when a young man is accused of killing a boy he was babysitting, it ignites a cascade of violence and terror that will force Laurie to finally confront the evil she can’t control, once and for all."),listOf<String>()),)
-            viewModel.postFavorite(debugList[9])
-            viewModel.postFavorite(debugList[1])
-            viewModel.postFavorite(debugList[6])
             viewModel.postTrending(debugList)
         }
     }

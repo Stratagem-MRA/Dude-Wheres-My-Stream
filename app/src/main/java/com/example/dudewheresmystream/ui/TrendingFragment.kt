@@ -35,7 +35,6 @@ class TrendingFragment: Fragment() {
             })
 
         adapter.setOnItemClickListener {
-            //TODO trending show has been clicked need to pull up minioneshow TODO ALSO same line in FavoritesFragment.kt
             setFragmentResult("displayMiniOneShow", bundleOf("data" to it,"source" to "Trending"))
         }
         return adapter

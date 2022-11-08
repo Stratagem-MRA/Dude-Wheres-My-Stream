@@ -51,7 +51,6 @@ class HomeFragment: Fragment() {
         binding.MiniOneShowFrame.isClickable = false
         binding.DimmerView.isVisible = false
         binding.DimmerView.isClickable = false
-        //TODO can we check if favorites have changed here?
     }
 
     override fun onCreateView(
@@ -82,8 +81,6 @@ class HomeFragment: Fragment() {
         binding.DimmerView.setOnClickListener{
             childFragmentManager.popBackStack()
         }
-        //TODO make sure to test if back button messes up these fragments
-        //TODO any other code to run when home fragment launches?
     }
 
 }
