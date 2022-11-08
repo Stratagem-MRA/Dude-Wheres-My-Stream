@@ -3,6 +3,7 @@ package com.example.dudewheresmystream.api
 import android.text.SpannableString
 import com.google.gson.annotations.SerializedName
 //TODO this should combine the Stream API and TMDB api information together
+
 data class VideoData(
     @SerializedName("name")
     val key: String,
@@ -11,8 +12,11 @@ data class VideoData(
     @SerializedName("thumbnailURL")
     val thumbnailURL: String,
     @SerializedName("description")
-    val description: SpannableString?
-) {
+    val description: SpannableString?,
+    @SerializedName("streamingURLs")
+    val streamingURLs: List<String>
+
+): java.io.Serializable {
     companion object{
         fun spannableStringsEqual(a: SpannableString?, b: SpannableString?): Boolean {
             if(a == null && b == null) return true

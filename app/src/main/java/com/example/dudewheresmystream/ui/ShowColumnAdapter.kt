@@ -1,7 +1,5 @@
-package com.example.dudewheresmystream
+package com.example.dudewheresmystream.ui
 
-import android.provider.MediaStore.Video
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

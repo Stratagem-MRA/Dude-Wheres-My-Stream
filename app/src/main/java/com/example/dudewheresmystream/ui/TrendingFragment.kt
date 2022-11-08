@@ -1,11 +1,14 @@
-package com.example.dudewheresmystream
+package com.example.dudewheresmystream.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dudewheresmystream.databinding.FragmentRvHorizontalBinding
@@ -21,7 +24,7 @@ class TrendingFragment: Fragment() {
         }
     }
 
-    private fun initAdapter(binding: FragmentRvHorizontalBinding): ShowColumnAdapter{
+    private fun initAdapter(binding: FragmentRvHorizontalBinding): ShowColumnAdapter {
         val adapter = ShowColumnAdapter(viewModel)
         binding.RVHorizontal.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         binding.RVHorizontal.adapter = adapter
@@ -33,6 +36,7 @@ class TrendingFragment: Fragment() {
 
         adapter.setOnItemClickListener {
             //TODO trending show has been clicked need to pull up minioneshow TODO ALSO same line in FavoritesFragment.kt
+            setFragmentResult("displayMiniOneShow", bundleOf("data" to it,"source" to "Trending"))
         }
         return adapter
     }

@@ -1,10 +1,13 @@
-package com.example.dudewheresmystream
+package com.example.dudewheresmystream.ui
 
-import android.provider.MediaStore.Video
+import android.util.Log
 import androidx.lifecycle.*
+import com.example.dudewheresmystream.MainActivity
 import com.example.dudewheresmystream.api.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
+import okhttp3.internal.notifyAll
 
 class MainViewModel: ViewModel() {
     private var trending = MutableLiveData<List<VideoData>>()
@@ -62,11 +65,13 @@ class MainViewModel: ViewModel() {
 
     fun postFavorite(show: VideoData){
         favorites.value!!.add(show)
+        favorites.value = favorites.value
         //TODO double check this triggers the listener
     }
     fun removeFavorite(show: VideoData){
         val index = favorites.value!!.indexOf(show)
         favorites.value!!.removeAt(index)
+        favorites.value = favorites.value
         //TODO may need to add search functionality here
     }
 
