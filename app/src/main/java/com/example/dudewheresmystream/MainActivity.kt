@@ -4,65 +4,41 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.ActionBar
 import android.os.Bundle
 import android.text.SpannableString
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.core.view.MenuProvider
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import com.example.dudewheresmystream.api.VideoData
 import com.example.dudewheresmystream.databinding.ActionBarBinding
 import com.example.dudewheresmystream.databinding.ActivityMainBinding
-import com.example.dudewheresmystream.ui.HomeFragment
-import com.example.dudewheresmystream.ui.MainViewModel
+import com.example.dudewheresmystream.ui.*
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
     companion object {
         val globalDebug = true
         private const val mainFragTag = "mainFragTag"
-        private const val optionsFragTag = "optionsFragTag"
+        private const val settingsFragTag = "settingsFragTag"
         private const val searchFragTag = "searchFragTag"
-        private const val showFragTag = "showFragTag"
+        private const val trendingFragTag = "trendingFragTag"
+        private const val favoritesFragTag = "favoritesFragTag"
     }
     //TODO setup actionbarbinding see hw4
     private var actionBarBinding: ActionBarBinding? = null
+    private lateinit var drawerToggle: ActionBarDrawerToggle
     private val viewModel: MainViewModel by viewModels()
 
-    fun hideKeyboard() {
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
-        actionBarBinding!!.actionSearch.clearFocus()
-    }
-    private fun initActionBar(actionBar: ActionBar){
-        actionBar.setDisplayShowTitleEnabled(false)
-        actionBar.setDisplayShowCustomEnabled(true)
-        actionBarBinding = ActionBarBinding.inflate(layoutInflater)
-        actionBar.customView = actionBarBinding?.root
-    }
-
-    private fun actionBarMenu(){
-        actionBarBinding!!.actionMenu.setOnClickListener {
-            //TODO open menu options
-            //TODO Home, Trending, Favorites, Explore
-        }
-    }
-
-    private fun actionBarSearch(){
-        actionBarBinding!!.actionSearch.addTextChangedListener {
-            //TODO implement search functionality here
-            //TODO functionality should be the same across fragments and should have bar hidden in settings fragment
-        }
-    }
-
-    private fun addHomeFragment(){
-        supportFragmentManager.commitNow{
-            add(R.id.main_frame, HomeFragment.newInstance(), mainFragTag)
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        }
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,21 +49,59 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.let{
             initActionBar(it)
         }
+        activityMainBinding.apply{
+            drawerToggle = ActionBarDrawerToggle(this@MainActivity,drawerLayout,R.string.open,R.string.close)
+            drawerLayout.addDrawerListener(drawerToggle)
+            drawerToggle.syncState()
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+            navView.setNavigationItemSelectedListener {
+                when(it.itemId){
+                    R.id.navOption1 -> {
+                        //Home
+                        launchHome()
+                    }
+                    R.id.navOption2 -> {
+                        //Settings
+                        launchSettings()
+                    }
+                    R.id.navOption3 -> {
+                        //Trending
+                        launchTrending()
+                    }
+                    R.id.navOption4 -> {
+                        //Favorites
+                        launchFavorites()
+                    }
+                    R.id.navOption5 -> {
+                        //Search
+                        launchSearch()
+                    }
+                }
+                drawerLayout.closeDrawer(GravityCompat.START)
+                true
+            }
+        }
         addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Inflate the menu; this adds items to the action bar if it is present.
-                //menuInflater.inflate(R.menu.menu_main, menu)
+                menuInflater.inflate(R.menu.menu, menu)
                 //TODO might want to use this for the menu???
             }
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Handle action bar item clicks here.
                 return when (menuItem.itemId) {
                     android.R.id.home -> false // Handle in fragment
+                    R.id.menuSettings ->{
+                        launchSettings()
+                        true
+                    }
                     else -> true
                 }
             }
         })
         addHomeFragment()
+        actionBarSearch()
         if(globalDebug){
             val debugList = listOf<VideoData>(
                 VideoData("Key-0", SpannableString("Crawlspace"),"https://www.themoviedb.org/t/p/w440_and_h660_face/qEu6qI5sVoIe10gD1BQBqxcNIW2.jpg",SpannableString("After witnessing a brutal murder in a cabin, a man hides in a crawlspace while the killers scour the property for a hidden fortune. As they draw nearer, he must decide if the crawlspace will be his tomb or the battleground in his fight for survival."),listOf<String>()),
@@ -103,5 +117,92 @@ class MainActivity : AppCompatActivity() {
             viewModel.postTrending(debugList)
         }
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (drawerToggle.onOptionsItemSelected(item)){
+            true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    fun hideKeyboard() {
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
+        actionBarBinding!!.actionSearch.clearFocus()
+    }
+    private fun initActionBar(actionBar: ActionBar){
+        actionBar.setDisplayShowTitleEnabled(false)
+        actionBar.setDisplayShowCustomEnabled(true)
+        actionBarBinding = ActionBarBinding.inflate(layoutInflater)
+        actionBar.customView = actionBarBinding?.root
+    }
+
+
+    private fun actionBarSearch(){
+        actionBarBinding!!.actionSearch.addTextChangedListener {
+            //TODO implement search functionality here
+            //TODO functionality should be the same across fragments and should have bar hidden in settings fragment
+            if (it.toString().isEmpty()){
+                hideKeyboard()
+            }
+        }
+    }
+
+    private fun addHomeFragment(){
+        supportFragmentManager.commitNow{
+            add(R.id.main_frame, HomeFragment.newInstance(), mainFragTag)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        }
+    }
+
+    private fun clearBackstack(){
+        val mainFrag = supportFragmentManager.findFragmentByTag(mainFragTag)
+        if(mainFrag!!.isVisible){
+            mainFrag.childFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+        else{
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+    }
+
+    private fun launchHome(){
+        //Redundant but fits in with the naming scheme of the other nav methods
+        clearBackstack()
+    }
+
+    private fun launchSettings(){
+        clearBackstack()
+        supportFragmentManager.commit {
+            replace(R.id.main_frame, SettingsFragment.newInstance(), settingsFragTag)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            addToBackStack(settingsFragTag)
+        }
+    }
+
+    private fun launchTrending(){
+        clearBackstack()
+        supportFragmentManager.commit {
+            replace(R.id.main_frame, LargeTrendingFragment.newInstance(), trendingFragTag)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            addToBackStack(trendingFragTag)
+        }
+    }
+
+    private fun launchFavorites(){
+        clearBackstack()
+        supportFragmentManager.commit {
+            replace(R.id.main_frame, LargeFavoritesFragment.newInstance(), favoritesFragTag)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            addToBackStack(favoritesFragTag)
+        }
+    }
+
+    private fun launchSearch(){
+        clearBackstack()
+        supportFragmentManager.commit {
+            replace(R.id.main_frame, SearchFragment.newInstance(), searchFragTag)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            addToBackStack(searchFragTag)
+        }
+    }
+    //TODO RVs in the home fragment should be limited to a certain number of items and then add a display more button at the end that opens up the respective Large Fragment
 }
-//TODO RVs in the home fragment should be limited to a certain number of items and then add a display more button at the end that opens up something like the search fragment

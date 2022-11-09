@@ -1,8 +1,6 @@
 package com.example.dudewheresmystream.ui
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,12 +25,12 @@ class HomeFragment: Fragment() {
     }
     private fun addTrendingFrag(){
         childFragmentManager.commit{
-            replace(R.id.TrendingShowsFrame, TrendingFragment.newInstance(), trendingFragTag)
+            replace(R.id.TrendingShowsFrame, MiniTrendingFragment.newInstance(), trendingFragTag)
         }
     }
     private fun addFavoritesFrag(){
         childFragmentManager.commit{
-            replace(R.id.FavoritesFrame, FavoritesFragment.newInstance(), favoritesFragTag)
+            replace(R.id.FavoritesFrame, MiniFavoritesFragment.newInstance(), favoritesFragTag)
         }
     }
     private fun setMiniOneShow(data: VideoData){

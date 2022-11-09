@@ -1,7 +1,6 @@
 package com.example.dudewheresmystream.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dudewheresmystream.databinding.FragmentRvHorizontalBinding
 
-class TrendingFragment: Fragment() {
+class MiniTrendingFragment: Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentRvHorizontalBinding? = null
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance(): TrendingFragment {
-            return TrendingFragment()
+        fun newInstance(): MiniTrendingFragment {
+            return MiniTrendingFragment()
         }
     }
 

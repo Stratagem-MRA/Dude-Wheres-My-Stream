@@ -1,7 +1,6 @@
 package com.example.dudewheresmystream.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,15 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dudewheresmystream.databinding.FragmentRvHorizontalBinding
 
-class FavoritesFragment: Fragment() {
+class MiniFavoritesFragment: Fragment() {
+    //TODO closing app via back button then relaunching clears the favorites list. How can we solve this? I thin HW4 addressed this in a comment somewhere
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentRvHorizontalBinding? = null
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance(): FavoritesFragment {
-            return FavoritesFragment()
+        fun newInstance(): MiniFavoritesFragment {
+            return MiniFavoritesFragment()
         }
     }
 

@@ -3,14 +3,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <!--TODO prettify this stuff-->
-    <ImageView
-            android:id="@+id/actionMenu"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_baseline_menu_24"/>
-
+    <!--TODO prettify this stuff, possibly add a title text to be updated with LiveData?-->
     <EditText
             android:id="@+id/actionSearch"
             android:layout_width="0dp"

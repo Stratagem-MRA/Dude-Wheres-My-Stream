@@ -24,7 +24,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/TrendingShowsFrame"
-            android:name="com.example.dudewheresmystream.ui.TrendingFragment"
+            android:name="com.example.dudewheresmystream.ui.MiniTrendingFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="12dp"
@@ -46,7 +46,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/FavoritesFrame"
-            android:name="com.example.dudewheresmystream.ui.FavoritesFragment"
+            android:name="com.example.dudewheresmystream.ui.MiniFavoritesFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="12dp"

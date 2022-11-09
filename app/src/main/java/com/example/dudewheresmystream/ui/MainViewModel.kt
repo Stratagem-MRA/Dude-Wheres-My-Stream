@@ -1,8 +1,11 @@
 package com.example.dudewheresmystream.ui
 
 import android.util.Log
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import androidx.lifecycle.*
 import com.example.dudewheresmystream.MainActivity
+import com.example.dudewheresmystream.R
 import com.example.dudewheresmystream.api.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +27,9 @@ class MainViewModel: ViewModel() {
     val streamRepo = StreamRepo(streamApi)
     var streamFetchDone: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    private var searchData = MutableLiveData<List<VideoData>>()
     private var searchTerm = MutableLiveData<String>()
+
 
     init{
         //TODO refresh trending vods
@@ -94,5 +99,10 @@ class MainViewModel: ViewModel() {
     fun postSearchTerm(text: String){
         searchTerm.value = text
     }
+
+    fun observeSearch(): MutableLiveData<List<VideoData>> {
+        return searchData
+    }
+
 
 }

@@ -1,13 +1,11 @@
 package com.example.dudewheresmystream.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.addCallback
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -88,7 +86,7 @@ class MiniOneShowFragment(private val data: VideoData) : Fragment() {
     private fun launchSeeMore(){
         parentFragmentManager.popBackStack()
         requireActivity().supportFragmentManager.commit {
-            replace(R.id.main_frame, OneShowFragment.newInstance(data), "OneShow")
+            replace(R.id.main_frame, LargeOneShowFragment.newInstance(data), "OneShow")
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             addToBackStack("OneShow")
         }

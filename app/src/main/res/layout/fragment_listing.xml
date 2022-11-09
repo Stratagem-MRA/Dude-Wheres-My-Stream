@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RVHorizontal"
+        android:id="@+id/RVVertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"/>
     <!--TODO figure out how to add lines in between. see previous FC for example-->
-
 </LinearLayout>
