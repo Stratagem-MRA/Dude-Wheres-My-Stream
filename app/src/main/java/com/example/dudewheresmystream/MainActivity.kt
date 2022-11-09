@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
+import com.example.dudewheresmystream.Jsoup.Scraper
 import com.example.dudewheresmystream.api.VideoData
 import com.example.dudewheresmystream.databinding.ActionBarBinding
 import com.example.dudewheresmystream.databinding.ActivityMainBinding
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity(){
         private const val searchFragTag = "searchFragTag"
         private const val trendingFragTag = "trendingFragTag"
         private const val favoritesFragTag = "favoritesFragTag"
+        private const val aboutFragTag = "aboutFragTag"
     }
     //TODO setup actionbarbinding see hw4
     private var actionBarBinding: ActionBarBinding? = null
@@ -77,6 +79,10 @@ class MainActivity : AppCompatActivity(){
                         //Search
                         launchSearch()
                     }
+                    R.id.navOption6 -> {
+                        //About
+                        launchAbout()
+                    }
                 }
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
@@ -115,6 +121,7 @@ class MainActivity : AppCompatActivity(){
                 VideoData("Key-8", SpannableString("Coco"),"https://www.themoviedb.org/t/p/w440_and_h660_face/gGEsBPAijhVUFoiNpgZXqRVWJt2.jpg",SpannableString("Despite his family’s baffling generations-old ban on music, Miguel dreams of becoming an accomplished musician like his idol, Ernesto de la Cruz. Desperate to prove his talent, Miguel finds himself in the stunning and colorful Land of the Dead following a mysterious chain of events. Along the way, he meets charming trickster Hector, and together, they set off on an extraordinary journey to unlock the real story behind Miguel's family history."),listOf<String>()),
                 VideoData("Key-9", SpannableString("Halloween Ends"),"https://www.themoviedb.org/t/p/w440_and_h660_face/h1FGQ6FRW6kNx4ACxjCJ18ssW3Y.jpg",SpannableString("Four years after the events of Halloween in 2018, Laurie has decided to liberate herself from fear and rage and embrace life. But when a young man is accused of killing a boy he was babysitting, it ignites a cascade of violence and terror that will force Laurie to finally confront the evil she can’t control, once and for all."),listOf<String>()),)
             viewModel.postTrending(debugList)
+            Scraper().test()
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -202,6 +209,15 @@ class MainActivity : AppCompatActivity(){
             replace(R.id.main_frame, SearchFragment.newInstance(), searchFragTag)
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             addToBackStack(searchFragTag)
+        }
+    }
+
+    private fun launchAbout(){
+        clearBackstack()
+        supportFragmentManager.commit {
+            replace(R.id.main_frame, AboutFragment.newInstance(), aboutFragTag)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            addToBackStack(aboutFragTag)
         }
     }
     //TODO RVs in the home fragment should be limited to a certain number of items and then add a display more button at the end that opens up the respective Large Fragment

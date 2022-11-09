@@ -3,21 +3,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navOption1"
-        android:title="Home"/>
+        android:title="Home"
+        android:icon="@drawable/ic_baseline_home_24"/>
     <item
         android:id="@+id/navOption2"
         android:title="Settings"
-        />
+        android:icon="@drawable/ic_baseline_settings_24" />
     <item
         android:id="@+id/navOption3"
         android:title="Trending"
-        />
+        android:icon="@drawable/ic_baseline_trending_up_24"/>
     <item
         android:id="@+id/navOption4"
         android:title="Favorites"
-        />
+        android:icon="@drawable/ic_baseline_star_24"/>
     <item
         android:id="@+id/navOption5"
-        android:title="Search"/>
+        android:title="Search"
+        android:icon="@drawable/ic_baseline_search_24"/>
+    <item
+        android:id="@+id/navOption6"
+        android:title="About"
+        android:icon="@drawable/ic_baseline_question_mark_24"/>
     <!--TODO maybe a browse category to sort through stuff by genre?-->
 </menu>

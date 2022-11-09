@@ -1,9 +1,13 @@
 # Dude-Wheres-My-Stream
 Final Project for Android Programming
 
+## 11/9/2022:1756
+Implemented a web scraping method that will be able to pull links directly from the TMDb pages provided by the TMDb api
+Next steps are putting together the API calls from TMDb
+
 ## 11/9/2022:1308
 Basic layout/functionality is complete. Can navigate through the app similar to what the final version should be.
-Next steps are to get network functionality implemented and them add in the search function.
+Next steps are to get network functionality implemented and then add in the search function.
 
 ## 11/8/2022:1529
 
