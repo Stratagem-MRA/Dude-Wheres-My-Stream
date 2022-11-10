@@ -21,7 +21,7 @@ class MainViewModel: ViewModel() {
     private var favorites: MutableLiveData<MutableList<VideoData>> = MutableLiveData(mutableListOf<VideoData>())
 
 
-    private var tmdbData = MutableLiveData<List<TMDBData>>()
+    private var tmdbData = MutableLiveData<List<VideoData>>()
     val tmdbApi = TMDBApi.create()
     val tmdbRepo = TMDBRepo(tmdbApi)
     var tmdbFetchDone: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -71,7 +71,7 @@ class MainViewModel: ViewModel() {
     fun observeFavorites(): MutableLiveData<MutableList<VideoData>> {
         return favorites
     }
-    fun observeTMDBData(): MutableLiveData<List<TMDBData>> {
+    fun observeTMDBData(): MutableLiveData<List<VideoData>> {
         return tmdbData
     }
     fun postStreamData(list: List<OneStreamData>){

@@ -10,14 +10,14 @@ class TMDBRepo(private val tmdbApi: TMDBApi) {
         SpannableString::class.java, TMDBApi.SpannableDeserializer()
     ).create()
 
-    private fun unpackData(response: TMDBApi.TMDBResponse): List<TMDBData> {
+    private fun unpackData(response: TMDBApi.TMDBResponse): List<VideoData> {
         val dataListing = response.data.children.map {
             it.data
         }
         return dataListing
     }
 
-    suspend fun getTMDBInfo(): List<TMDBData> {//TODO add any params needed for query, same name as func in api
+    suspend fun getTMDBInfo(): List<VideoData> {//TODO add any params needed for query, same name as func in api
         //TODO possibly rename this to getTMDBTrendingInfo
         if (MainActivity.globalDebug) {
             val response = gson.fromJson(

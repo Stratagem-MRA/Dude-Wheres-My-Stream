@@ -2,22 +2,31 @@ package com.example.dudewheresmystream.api
 
 import android.text.SpannableString
 import com.google.gson.annotations.SerializedName
-//TODO this should combine the Stream API and TMDB api information together
-//TODO add info based on whats available in api such as director, actors, etc.
+//TODO what happens when a query doesn't contain one of the below fields? I think it just gets returned as null
 
 data class VideoData(
-    @SerializedName("name")
+    @SerializedName("imdb_id")
     val key: String,
     @SerializedName("title")
     val title: SpannableString?,
-    @SerializedName("thumbnailURL")
+    @SerializedName("poster_path")
     val thumbnailURL: String,
-    @SerializedName("description")
+    @SerializedName("overview")
     val description: SpannableString?,
-    @SerializedName("streamingURLs")
-    val streamingURLs: List<String>,
     @SerializedName("tmdbURL")
-    val tmdbURL: String
+    val tmdbURL: String,
+    @SerializedName("tvID")
+    val tvID: Int,
+    @SerializedName("movieID")
+    val movieID: Int,
+    @SerializedName("popularity")
+    val popularity: Int,
+    @SerializedName("release_date")
+    val releaseDate: String,
+    @SerializedName("cast")
+    val cast: List<CastInfo>,
+    @SerializedName("crew")
+    val crew: List<CrewInfo>,
 
 ): java.io.Serializable {
     companion object{
@@ -33,3 +42,55 @@ data class VideoData(
         }
     }
 }
+
+data class CastInfo(
+    @SerializedName("adult")
+    val adult: Boolean,
+    @SerializedName("gender")
+    val gender: Int,
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("known_for_department")
+    val department: String,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("original_name")
+    val originalName: String,
+    @SerializedName("popularity")
+    val popularity: Int,
+    @SerializedName("profile_path")
+    val profilePicURL: String,
+    @SerializedName("cast_id")
+    val castID: Int,
+    @SerializedName("character")
+    val character: String,
+    @SerializedName("credit_id")
+    val creditID: String,
+    @SerializedName("order")
+    val order: Int
+)
+
+data class CrewInfo(
+    @SerializedName("adult")
+    val adult: Boolean,
+    @SerializedName("gender")
+    val gender: Int,
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("known_for_department")
+    val knownForDepartment: String,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("original_name")
+    val originalName: String,
+    @SerializedName("popularity")
+    val popularity: Int,
+    @SerializedName("profile_path")
+    val profilePicURL: String,
+    @SerializedName("credit_id")
+    val creditID: String,
+    @SerializedName("department")
+    val department: String,
+    @SerializedName("job")
+    val job: String
+)

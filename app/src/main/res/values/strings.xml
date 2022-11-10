@@ -2,4 +2,5 @@
     <string name="app_name">Dude Where\'s My Stream</string>
     <string name="open">Drawer opened</string>
     <string name="close">Drawer closed</string>
+    <string name="TMDbAPIKey">edfc0e18aaba20f6f68fbed52f5204ba</string>
 </resources>

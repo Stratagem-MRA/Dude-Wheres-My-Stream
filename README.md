@@ -1,6 +1,11 @@
 # Dude-Wheres-My-Stream
 Final Project for Android Programming
 
+## 11/10/2022:1707
+THIS VERSION WILL NOT RUN
+Base structure for api calls is written. VideoData class has been updated to include all possible info from existing api calls
+Next steps implement network calls in TMDBRepo, settings tab, search function(including new api calls)
+
 ## 11/10/2022:1430
 With the exception of search feature the app functionality is now complete
 Next steps setup API calls to get real data, settings tab is nonsense atm, implement search function
