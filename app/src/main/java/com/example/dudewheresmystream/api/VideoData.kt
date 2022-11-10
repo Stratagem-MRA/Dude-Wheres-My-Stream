@@ -15,7 +15,9 @@ data class VideoData(
     @SerializedName("description")
     val description: SpannableString?,
     @SerializedName("streamingURLs")
-    val streamingURLs: List<String>
+    val streamingURLs: List<String>,
+    @SerializedName("tmdbURL")
+    val tmdbURL: String
 
 ): java.io.Serializable {
     companion object{

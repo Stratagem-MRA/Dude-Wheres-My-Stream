@@ -27,18 +27,16 @@ class SearchFragment():Fragment() {
 
     private fun initAdapter(binding: FragmentListingBinding): ShowRowAdapter {
         val adapter = ShowRowAdapter(viewModel)
-        binding.RVVertical.layoutManager = LinearLayoutManager(activity)//TODO activity vs this.context what's the differnece?
+        binding.RVVertical.layoutManager = LinearLayoutManager(activity)
         binding.RVVertical.adapter = adapter
 
         viewModel.observeSearch().observe(viewLifecycleOwner,
             Observer{ searchPostList ->
                 adapter.submitList(searchPostList)
                 adapter.notifyDataSetChanged()
-                //TODO do we want to lengthen this list or shorten the mini fragment version somehow?
             })
 
         adapter.setOnItemClickListener {
-            //TODO launch a large oneshowfragment here
             requireActivity().supportFragmentManager.commit {
                 replace(R.id.main_frame, LargeOneShowFragment.newInstance(it), "OneShow")
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -60,5 +58,6 @@ class SearchFragment():Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val rvAdapter = initAdapter(binding)
+        //TODO what is this doing?
     }
 }

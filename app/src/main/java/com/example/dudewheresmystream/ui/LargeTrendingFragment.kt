@@ -13,7 +13,7 @@ import com.example.dudewheresmystream.databinding.FragmentListingBinding
 
 class LargeTrendingFragment: Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
-    private var _binding: FragmentListingBinding? = null //TODO probably want a different binding
+    private var _binding: FragmentListingBinding? = null
     private val binding get() = _binding!!
 
     companion object {
@@ -24,7 +24,7 @@ class LargeTrendingFragment: Fragment() {
 
     private fun initAdapter(binding: FragmentListingBinding): ShowRowAdapter {
         val adapter = ShowRowAdapter(viewModel)
-        binding.RVVertical.layoutManager = LinearLayoutManager(activity)//TODO activity vs this.context what's the differnece?
+        binding.RVVertical.layoutManager = LinearLayoutManager(activity)
         binding.RVVertical.adapter = adapter
 
         viewModel.observeTrending().observe(viewLifecycleOwner,
@@ -34,7 +34,6 @@ class LargeTrendingFragment: Fragment() {
             })
 
         adapter.setOnItemClickListener {
-            //TODO launch a large oneshowfragment here
             requireActivity().supportFragmentManager.commit {
                 replace(R.id.main_frame, LargeOneShowFragment.newInstance(it), "OneShow")
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

@@ -36,7 +36,6 @@ class ShowColumnAdapter(private val viewModel: MainViewModel)
         currentList[position].let{
             binding.columnTV.text = it.title
             Glide.glideFetch(it.thumbnailURL,binding.columnThumbnail)
-            //TODO any other items that need to be set on bind?
         }
     }
 
@@ -48,7 +47,7 @@ class ShowColumnAdapter(private val viewModel: MainViewModel)
 
     class VideoDiff : DiffUtil.ItemCallback<VideoData>(){
         override fun areItemsTheSame(oldItem: VideoData, newItem: VideoData): Boolean {
-            return oldItem.title == newItem.title //TODO might need to change this as multiple shows may have the same title??? .key may be appropriate depending on implementation
+            return oldItem.key == newItem.key
         }
         override fun areContentsTheSame(oldItem: VideoData, newItem: VideoData): Boolean {
             return VideoData.spannableStringsEqual(oldItem.title,newItem.title) &&

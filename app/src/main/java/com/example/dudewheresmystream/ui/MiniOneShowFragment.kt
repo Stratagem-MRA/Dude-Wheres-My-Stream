@@ -1,15 +1,18 @@
 package com.example.dudewheresmystream.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dudewheresmystream.R
 import com.example.dudewheresmystream.api.VideoData
 import com.example.dudewheresmystream.databinding.FragmentMinioneshowBinding
@@ -43,15 +46,23 @@ class MiniOneShowFragment(private val data: VideoData) : Fragment() {
         binding.seeMoreButton.setOnClickListener { launchSeeMore() }
         initializeFavorite()
         setBackButton()
-        addlinks()
+        initializeRV()
     }
 
-    private fun addlinks(){
-        //TODO update this once we have live streaming links TextView is inappropriate
-        for (item in data.streamingURLs){
-            val TV = TextView(this.context)
-            TV.text = item
-            binding.linkContainer.addView(TV)
+    private fun initializeRV(){
+        val adapter = StreamProviderAdapter(viewModel)
+        binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)//TODO do we like the grid layout manager?
+        binding.linkContainerRV.adapter = adapter
+        viewModel.scrapeLinks(data.tmdbURL)//posts to StreamData once network request resolves
+        viewModel.observeStreamData().observe(viewLifecycleOwner,
+        Observer {
+            adapter.submitList(it)
+        })
+
+
+        adapter.setOnItemClickListener {
+            val i = Intent.parseUri(it.streamURL, Intent.URI_INTENT_SCHEME)
+            startActivity(i)
         }
     }
 
@@ -90,5 +101,10 @@ class MiniOneShowFragment(private val data: VideoData) : Fragment() {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             addToBackStack("OneShow")
         }
+    }
+
+    override fun onDestroy() {
+        viewModel.postStreamData(listOf())
+        super.onDestroy()
     }
 }

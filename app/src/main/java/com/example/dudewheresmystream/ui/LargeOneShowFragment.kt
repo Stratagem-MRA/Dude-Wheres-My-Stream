@@ -1,12 +1,15 @@
 package com.example.dudewheresmystream.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dudewheresmystream.R
 import com.example.dudewheresmystream.api.VideoData
 import com.example.dudewheresmystream.databinding.FragmentOneshowBinding
@@ -38,7 +41,7 @@ class LargeOneShowFragment(private val data: VideoData): Fragment() {
         binding.infoTV.text = data.description //TODO we probably need to add individual elements to handle styling of text such as bolding titles etc.
         binding.title.text = data.title
         initializeFavorite()
-        addlinks()
+        initializeRV()
     }
 
     private fun initializeFavorite(){
@@ -63,13 +66,26 @@ class LargeOneShowFragment(private val data: VideoData): Fragment() {
         }
     }
 
-    private fun addlinks(){
-        //TODO update this once we have live streaming links TextView is inappropriate
-        for (item in data.streamingURLs){
-            val TV = TextView(this.context)
-            TV.text = item
-            binding.linkContainer.addView(TV)
+    private fun initializeRV(){
+        val adapter = StreamProviderAdapter(viewModel)
+        binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)//TODO do we like the grid layout manager?
+        binding.linkContainerRV.adapter = adapter
+        viewModel.scrapeLinks(data.tmdbURL)//posts to StreamData once network request resolves
+        viewModel.observeStreamData().observe(viewLifecycleOwner,
+            Observer {
+                adapter.submitList(it)
+            })
+
+
+        adapter.setOnItemClickListener {
+            val i = Intent.parseUri(it.streamURL, Intent.URI_INTENT_SCHEME)
+            startActivity(i)
         }
+    }
+
+    override fun onDestroy() {
+        viewModel.postStreamData(listOf())
+        super.onDestroy()
     }
 
 }

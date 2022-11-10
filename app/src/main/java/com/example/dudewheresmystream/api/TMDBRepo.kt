@@ -18,6 +18,7 @@ class TMDBRepo(private val tmdbApi: TMDBApi) {
     }
 
     suspend fun getTMDBInfo(): List<TMDBData> {//TODO add any params needed for query, same name as func in api
+        //TODO possibly rename this to getTMDBTrendingInfo
         if (MainActivity.globalDebug) {
             val response = gson.fromJson(
                 "",

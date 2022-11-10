@@ -48,7 +48,7 @@ class ShowRowAdapter(private val viewModel: MainViewModel)
 
     class VideoDiff : DiffUtil.ItemCallback<VideoData>(){
         override fun areItemsTheSame(oldItem: VideoData, newItem: VideoData): Boolean {
-            return oldItem.title == newItem.title //TODO might need to change this as multiple shows may have the same title??? .key may be appropriate depending on implementation
+            return oldItem.key == newItem.key
         }
         override fun areContentsTheSame(oldItem: VideoData, newItem: VideoData): Boolean {
             return VideoData.spannableStringsEqual(oldItem.title,newItem.title) &&
