@@ -1,6 +1,9 @@
 # Dude-Wheres-My-Stream
 Final Project for Android Programming
 
+##11/13/2022:1540
+fragment_minioneshow.xml updated
+
 ##11/13/2022:1305
 API calls all appear to be working, trending and favorites tab are working.
 Next steps: update xml for minioneshow and largeoneshow to incorporate all available data. settings tab, search function

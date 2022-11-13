@@ -65,8 +65,8 @@ class TMDBRepo(private val tmdbApi: TMDBApi) {
         return if(vd.type == ShowType.MOVIE){
             tmdbApi.getTMDBMovieCredits(vd.tmdbID.toString(),tmdbAPIKey).let {
                 CreditsVideoData(
-                    cast = it.cast,
-                    crew = it.crew,
+                    cast = it.cast.map{cast -> CastInfo(cast.adult,cast.gender,cast.id,cast.department,cast.name,cast.originalName,cast.popularity,"https://image.tmdb.org/t/p/original${cast.profilePicURL}",cast.castID,cast.character,cast.creditID,cast.order)},
+                    crew = it.crew.map{crew -> CrewInfo(crew.adult,crew.gender,crew.id,crew.knownForDepartment,crew.name,crew.originalName,crew.popularity,"https://image.tmdb.org/t/p/original${crew.profilePicURL}",crew.creditID,crew.department,crew.job)},
                     type = ShowType.MOVIE
                 )
             }
@@ -74,8 +74,8 @@ class TMDBRepo(private val tmdbApi: TMDBApi) {
         else{
             tmdbApi.getTMDBTVCredits(vd.tmdbID.toString(),tmdbAPIKey).let {
                 CreditsVideoData(
-                    cast = it.cast,
-                    crew = it.crew,
+                    cast = it.cast.map{cast -> CastInfo(cast.adult,cast.gender,cast.id,cast.department,cast.name,cast.originalName,cast.popularity,"https://image.tmdb.org/t/p/original${cast.profilePicURL}",cast.castID,cast.character,cast.creditID,cast.order)},
+                    crew = it.crew.map{crew -> CrewInfo(crew.adult,crew.gender,crew.id,crew.knownForDepartment,crew.name,crew.originalName,crew.popularity,"https://image.tmdb.org/t/p/original${crew.profilePicURL}",crew.creditID,crew.department,crew.job)},
                     type = ShowType.TV
                 )
             }

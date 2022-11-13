@@ -40,7 +40,7 @@ class LargeOneShowFragment(private val data: DiscoverVideoData): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Glide.glideFetch(data.thumbnailURL!!,binding.thumbnail) //TODO should we be caching these or fetching from web each time?
-        binding.infoTV.text = data.description //TODO we probably need to add individual elements to handle styling of text such as bolding titles etc.
+        binding.overviewTV.text = data.description //TODO we probably need to add individual elements to handle styling of text such as bolding titles etc.
         binding.title.text = data.nameOrTitle
         initializeFavorite()
         initializeRV()

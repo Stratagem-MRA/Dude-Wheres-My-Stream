@@ -21,7 +21,7 @@
             app:layout_constraintTop_toBottomOf="@+id/title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/linkContainerRV"
-            app:layout_constraintBottom_toTopOf="@id/infoTV"
+            app:layout_constraintBottom_toTopOf="@id/overviewTV"
             android:layout_margin="12dp"/>
         <ImageView
             android:layout_width="wrap_content"
@@ -41,12 +41,12 @@
             app:layout_constraintTop_toBottomOf="@id/favoriteIcon"
             app:layout_constraintStart_toEndOf="@id/thumbnail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/infoTV"
+            app:layout_constraintBottom_toTopOf="@id/overviewTV"
             android:layout_margin="12dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/infoTV"
+            android:id="@+id/overviewTV"
             app:layout_constraintTop_toBottomOf="@id/linkContainerRV"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="12dp"/>
