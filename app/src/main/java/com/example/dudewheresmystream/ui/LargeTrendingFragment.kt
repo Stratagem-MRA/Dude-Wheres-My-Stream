@@ -55,6 +55,7 @@ class LargeTrendingFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val rvAdapter = initAdapter(binding)
+        //TODO lets try to get an infinite scroll going
     }
 
 }

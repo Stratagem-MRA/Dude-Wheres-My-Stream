@@ -2,7 +2,6 @@ package com.example.dudewheresmystream.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,17 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dudewheresmystream.R
-import com.example.dudewheresmystream.api.VideoData
+import com.example.dudewheresmystream.api.DiscoverVideoData
 import com.example.dudewheresmystream.databinding.FragmentOneshowBinding
 import com.example.dudewheresmystream.glide.Glide
 
-class LargeOneShowFragment(private val data: VideoData): Fragment() {
+class LargeOneShowFragment(private val data: DiscoverVideoData): Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentOneshowBinding? = null
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance(data: VideoData): LargeOneShowFragment {
+        fun newInstance(data: DiscoverVideoData): LargeOneShowFragment {
             return LargeOneShowFragment(data)
         }
     }
@@ -37,9 +36,9 @@ class LargeOneShowFragment(private val data: VideoData): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.glideFetch(data.thumbnailURL,binding.thumbnail) //TODO should we be caching these or fetching from web each time?
+        Glide.glideFetch(data.thumbnailURL!!,binding.thumbnail) //TODO should we be caching these or fetching from web each time?
         binding.infoTV.text = data.description //TODO we probably need to add individual elements to handle styling of text such as bolding titles etc.
-        binding.title.text = data.title
+        binding.title.text = data.nameOrTitle
         initializeFavorite()
         initializeRV()
     }
@@ -70,7 +69,7 @@ class LargeOneShowFragment(private val data: VideoData): Fragment() {
         val adapter = StreamProviderAdapter(viewModel)
         binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)//TODO do we like the grid layout manager?
         binding.linkContainerRV.adapter = adapter
-        viewModel.scrapeLinks(data.tmdbURL)//posts to StreamData once network request resolves
+        viewModel.scrapeLinks(data.tmdbURL!!)//posts to StreamData once network request resolves
         viewModel.observeStreamData().observe(viewLifecycleOwner,
             Observer {
                 adapter.submitList(it)

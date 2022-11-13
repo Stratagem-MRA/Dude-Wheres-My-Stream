@@ -2,7 +2,6 @@ package com.example.dudewheresmystream.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,17 +13,17 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dudewheresmystream.R
-import com.example.dudewheresmystream.api.VideoData
+import com.example.dudewheresmystream.api.DiscoverVideoData
 import com.example.dudewheresmystream.databinding.FragmentMinioneshowBinding
 import com.example.dudewheresmystream.glide.Glide
 
-class MiniOneShowFragment(private val data: VideoData) : Fragment() {
+class MiniOneShowFragment(private val data: DiscoverVideoData) : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentMinioneshowBinding? = null
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance(data: VideoData): MiniOneShowFragment {
+        fun newInstance(data: DiscoverVideoData): MiniOneShowFragment {
             return MiniOneShowFragment(data)
         }
     }
@@ -42,7 +41,7 @@ class MiniOneShowFragment(private val data: VideoData) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Glide.glideFetch(data.thumbnailURL,binding.thumbnail)
         binding.infoTV.text = data.description
-        binding.title.text = data.title
+        binding.title.text = data.nameOrTitle
         binding.seeMoreButton.setOnClickListener { launchSeeMore() }
         initializeFavorite()
         setBackButton()
@@ -53,11 +52,16 @@ class MiniOneShowFragment(private val data: VideoData) : Fragment() {
         val adapter = StreamProviderAdapter(viewModel)
         binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)//TODO do we like the grid layout manager?
         binding.linkContainerRV.adapter = adapter
-        viewModel.scrapeLinks(data.tmdbURL)//posts to StreamData once network request resolves
+
+        viewModel.observeProviders().observe(viewLifecycleOwner,
+            Observer{
+                viewModel.scrapeLinks(it.tmdbURL)//posts to StreamData once network request resolves//TODO does this work even with the network call to fetch this data
+            })
         viewModel.observeStreamData().observe(viewLifecycleOwner,
         Observer {
             adapter.submitList(it)
         })
+
 
 
         adapter.setOnItemClickListener {

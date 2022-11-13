@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dudewheresmystream.api.VideoData
+import com.example.dudewheresmystream.api.DiscoverVideoData
 import com.example.dudewheresmystream.databinding.ColumnBinding
 import com.example.dudewheresmystream.glide.Glide
 
 class ShowColumnAdapter(private val viewModel: MainViewModel)
-    : ListAdapter<VideoData, ShowColumnAdapter.VH>(VideoDiff()){
+    : ListAdapter<DiscoverVideoData, ShowColumnAdapter.VH>(VideoDiff()){
 
-    private var listener: ((VideoData) -> Unit)? = null
+    private var listener: ((DiscoverVideoData) -> Unit)? = null
 
     //listener setup courtesy of https://stackoverflow.com/questions/57542878/kotlin-recyclerview-start-new-activity
     inner class VH(val columnBinding: ColumnBinding)
@@ -34,24 +34,24 @@ class ShowColumnAdapter(private val viewModel: MainViewModel)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.columnBinding
         currentList[position].let{
-            binding.columnTV.text = it.title
+            //Log.d("","${it.type}")
+            binding.columnTV.text = it.nameOrTitle
             Glide.glideFetch(it.thumbnailURL,binding.columnThumbnail)
         }
     }
 
     override fun getItemCount() = currentList.size
 
-    fun setOnItemClickListener(f: (VideoData) -> Unit){
+    fun setOnItemClickListener(f: (DiscoverVideoData) -> Unit){
         listener = f
     }
 
-    class VideoDiff : DiffUtil.ItemCallback<VideoData>(){
-        override fun areItemsTheSame(oldItem: VideoData, newItem: VideoData): Boolean {
-            return oldItem.key == newItem.key
+    class VideoDiff : DiffUtil.ItemCallback<DiscoverVideoData>(){
+        override fun areItemsTheSame(oldItem: DiscoverVideoData, newItem: DiscoverVideoData): Boolean {
+            return oldItem.description == newItem.description//TODO double check this
         }
-        override fun areContentsTheSame(oldItem: VideoData, newItem: VideoData): Boolean {
-            return VideoData.spannableStringsEqual(oldItem.title,newItem.title) &&
-                    VideoData.spannableStringsEqual(oldItem.description,newItem.description)
+        override fun areContentsTheSame(oldItem: DiscoverVideoData, newItem: DiscoverVideoData): Boolean {
+            return oldItem.description == newItem.description//TODO double check this
         }
     }
 

@@ -1,47 +1,52 @@
 package com.example.dudewheresmystream.api
 
-import android.text.SpannableString
 import com.google.gson.annotations.SerializedName
-//TODO what happens when a query doesn't contain one of the below fields? I think it just gets returned as null
 
-data class VideoData(
-    @SerializedName("imdb_id")
-    val key: String,
-    @SerializedName("title")
-    val title: SpannableString?,
+data class DiscoverVideoData(//TODO there are differences in the field names for tv shows and movies that we need to account for
+    @SerializedName("name")//TODO this only applies to TV
+    val name: String?,
+    @SerializedName("title")//TODO this only applies to Movie
+    val title: String?,
+    @SerializedName("genre_ids")
+    val genreIDs: List<Int>,//TODO Make this an enum
     @SerializedName("poster_path")
     val thumbnailURL: String,
     @SerializedName("overview")
-    val description: SpannableString?,
-    @SerializedName("tmdbURL")
-    val tmdbURL: String,
-    @SerializedName("tvID")
-    val tvID: Int,
-    @SerializedName("movieID")
-    val movieID: Int,
+    val description: String?,
+    @SerializedName("id")
+    val tmdbID: Int,
     @SerializedName("popularity")
-    val popularity: Int,
+    val popularity: Float,
+    @SerializedName("vote_average")
+    val stars: Float,
+
+    val nameOrTitle: String,
+    val type: ShowType
+
+): java.io.Serializable //TODO do we need this?
+
+data class DetailsVideoData(
     @SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
+    @SerializedName("first_air_date")
+    val firstAirDate: String?,
+
+    val type: ShowType
+)
+
+data class CreditsVideoData(
     @SerializedName("cast")
     val cast: List<CastInfo>,
     @SerializedName("crew")
     val crew: List<CrewInfo>,
 
-): java.io.Serializable {
-    companion object{
-        fun spannableStringsEqual(a: SpannableString?, b: SpannableString?): Boolean {
-            if(a == null && b == null) return true
-            if(a == null && b != null) return false
-            if(a != null && b == null) return false
-            val spA = a!!.getSpans(0, a.length, Any::class.java)
-            val spB = b!!.getSpans(0, b.length, Any::class.java)
-            return a.toString() == b.toString()
-                    &&
-                    spA.size == spB.size && spA.equals(spB)
-        }
-    }
-}
+    val type: ShowType
+)
+
+data class ProvidersVideoData(
+    @SerializedName("tmdbURL")//TODO watch providers
+    val tmdbURL: String?
+)
 
 data class CastInfo(
     @SerializedName("adult")
@@ -61,7 +66,7 @@ data class CastInfo(
     @SerializedName("profile_path")
     val profilePicURL: String,
     @SerializedName("cast_id")
-    val castID: Int,
+    val castID: Int?,
     @SerializedName("character")
     val character: String,
     @SerializedName("credit_id")
@@ -94,3 +99,7 @@ data class CrewInfo(
     @SerializedName("job")
     val job: String
 )
+
+enum class ShowType{//TODO is this used
+TV, MOVIE
+}

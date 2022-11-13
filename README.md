@@ -1,6 +1,10 @@
 # Dude-Wheres-My-Stream
 Final Project for Android Programming
 
+##11/12/2022:2305
+API calls for scraping streaming providers is up and running. all other api calls are implemented but untested
+Next steps test the other api calls for details and credits and update views to make use of this info, settings tab, search function 
+
 ## 11/10/2022:1707
 THIS VERSION WILL NOT RUN
 Base structure for api calls is written. VideoData class has been updated to include all possible info from existing api calls

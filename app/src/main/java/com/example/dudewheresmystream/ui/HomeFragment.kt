@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.*
 import com.example.dudewheresmystream.R
-import com.example.dudewheresmystream.api.VideoData
+import com.example.dudewheresmystream.api.DiscoverVideoData
+import com.example.dudewheresmystream.api.ProvidersVideoData
 import com.example.dudewheresmystream.databinding.FragmentHomeBinding
 
 class HomeFragment: Fragment() {
@@ -33,7 +34,7 @@ class HomeFragment: Fragment() {
             replace(R.id.FavoritesFrame, MiniFavoritesFragment.newInstance(), favoritesFragTag)
         }
     }
-    private fun setMiniOneShow(data: VideoData){
+    private fun setMiniOneShow(data: DiscoverVideoData){
         childFragmentManager.commit{
             replace(R.id.MiniOneShowFrame, MiniOneShowFragment.newInstance(data), miniFragTag)
             addToBackStack("miniOneShow")
@@ -42,6 +43,7 @@ class HomeFragment: Fragment() {
         binding.MiniOneShowFrame.isClickable = true
         binding.DimmerView.isClickable = true
         binding.DimmerView.isVisible = true
+        viewModel.tmdbDetailRefresh(data)
 
     }
     private fun closeMiniOneShow(){
@@ -49,6 +51,7 @@ class HomeFragment: Fragment() {
         binding.MiniOneShowFrame.isClickable = false
         binding.DimmerView.isVisible = false
         binding.DimmerView.isClickable = false
+        viewModel.postProviders(ProvidersVideoData(""))
     }
 
     override fun onCreateView(
@@ -65,7 +68,7 @@ class HomeFragment: Fragment() {
         addTrendingFrag()
         addFavoritesFrag()
         childFragmentManager.setFragmentResultListener("displayMiniOneShow", this){key, bundle ->
-            val data = bundle.get("data") as VideoData
+            val data = bundle.get("data") as DiscoverVideoData
             val source = bundle.getString("source")
 
             setMiniOneShow(data)

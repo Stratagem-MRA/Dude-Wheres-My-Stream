@@ -1,6 +1,7 @@
 package com.example.dudewheresmystream.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dudewheresmystream.api.DiscoverVideoData
 import com.example.dudewheresmystream.databinding.FragmentRvHorizontalBinding
 
 class MiniTrendingFragment: Fragment() {
