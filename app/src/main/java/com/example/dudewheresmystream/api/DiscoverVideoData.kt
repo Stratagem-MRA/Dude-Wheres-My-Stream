@@ -62,7 +62,7 @@ data class CastInfo(
     @SerializedName("original_name")
     val originalName: String,
     @SerializedName("popularity")
-    val popularity: Int,
+    val popularity: Float,
     @SerializedName("profile_path")
     val profilePicURL: String,
     @SerializedName("cast_id")
@@ -89,7 +89,7 @@ data class CrewInfo(
     @SerializedName("original_name")
     val originalName: String,
     @SerializedName("popularity")
-    val popularity: Int,
+    val popularity: Float,
     @SerializedName("profile_path")
     val profilePicURL: String,
     @SerializedName("credit_id")
@@ -101,5 +101,5 @@ data class CrewInfo(
 )
 
 enum class ShowType{//TODO is this used
-TV, MOVIE
+TV, MOVIE, EMPTY
 }

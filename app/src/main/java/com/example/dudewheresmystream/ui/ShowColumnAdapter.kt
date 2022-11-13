@@ -34,7 +34,6 @@ class ShowColumnAdapter(private val viewModel: MainViewModel)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.columnBinding
         currentList[position].let{
-            //Log.d("","${it.type}")
             binding.columnTV.text = it.nameOrTitle
             Glide.glideFetch(it.thumbnailURL,binding.columnThumbnail)
         }

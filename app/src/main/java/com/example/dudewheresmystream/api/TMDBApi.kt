@@ -1,6 +1,5 @@
 package com.example.dudewheresmystream.api
 
-import android.text.SpannableString
 import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
@@ -81,30 +80,23 @@ interface TMDBApi {
             typeOfT: Type?,
             context: JsonDeserializationContext?
         ): ProviderResponse {
-            //Log.d("JSONDEBUG",json.asJsonObject.toString())//TODO gives us the link we're looking for when <ProviderCountryResponse>
-            val result = HashMap<String,String>()
-            json.asJsonObject.get("results").asJsonObject.entrySet().map {
-                result.put(it.key,it.value.asJsonObject.get("link").asString)
+            return try{
+                val result = HashMap<String,String>()
+                json.asJsonObject.get("results").asJsonObject.entrySet().map {
+                    result.put(it.key,it.value.asJsonObject.get("link").asString)
+                }
+                ProviderResponse(result)
+            } catch(e: Throwable){
+                Log.w("ProviderResponseDeserializer","${e.message}")
+                ProviderResponse(emptyMap())
             }
-            return ProviderResponse(result)
         }
     }
 
-    class SpannableDeserializer : JsonDeserializer<SpannableString> {
-        // @Throws(JsonParseException::class)
-        override fun deserialize(
-            json: JsonElement,
-            typeOfT: Type,
-            context: JsonDeserializationContext
-        ): SpannableString {
-            return SpannableString(json.asString)
-        }
-    }
 
     companion object {
         private fun buildGsonConverterFactory(): GsonConverterFactory {
             val gsonBuilder = GsonBuilder()
-                .registerTypeAdapter(SpannableString::class.java, SpannableDeserializer())
                 .registerTypeAdapter(ProviderResponse::class.java, ProviderResponseDeserializer())//TODO confirm this
             return GsonConverterFactory.create(gsonBuilder.create())
         }

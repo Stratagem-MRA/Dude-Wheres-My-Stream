@@ -51,7 +51,7 @@ class HomeFragment: Fragment() {
         binding.MiniOneShowFrame.isClickable = false
         binding.DimmerView.isVisible = false
         binding.DimmerView.isClickable = false
-        viewModel.postProviders(ProvidersVideoData(""))
+
     }
 
     override fun onCreateView(
@@ -67,10 +67,9 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         addTrendingFrag()
         addFavoritesFrag()
-        childFragmentManager.setFragmentResultListener("displayMiniOneShow", this){key, bundle ->
+        viewModel.tmdbTrendingRefresh("1")//TODO possibly add provider/region codes from settings here
+        childFragmentManager.setFragmentResultListener("displayMiniOneShow", viewLifecycleOwner){key, bundle ->
             val data = bundle.get("data") as DiscoverVideoData
-            val source = bundle.getString("source")
-
             setMiniOneShow(data)
         }
 

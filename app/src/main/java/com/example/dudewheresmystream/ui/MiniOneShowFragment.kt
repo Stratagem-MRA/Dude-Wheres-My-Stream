@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dudewheresmystream.R
 import com.example.dudewheresmystream.api.DiscoverVideoData
+import com.example.dudewheresmystream.api.ShowType
 import com.example.dudewheresmystream.databinding.FragmentMinioneshowBinding
 import com.example.dudewheresmystream.glide.Glide
 
@@ -45,6 +46,7 @@ class MiniOneShowFragment(private val data: DiscoverVideoData) : Fragment() {
         binding.seeMoreButton.setOnClickListener { launchSeeMore() }
         initializeFavorite()
         setBackButton()
+        initializeObservers()
         initializeRV()
     }
 
@@ -53,16 +55,15 @@ class MiniOneShowFragment(private val data: DiscoverVideoData) : Fragment() {
         binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)//TODO do we like the grid layout manager?
         binding.linkContainerRV.adapter = adapter
 
-        viewModel.observeProviders().observe(viewLifecycleOwner,
-            Observer{
-                viewModel.scrapeLinks(it.tmdbURL)//posts to StreamData once network request resolves//TODO does this work even with the network call to fetch this data
-            })
+
         viewModel.observeStreamData().observe(viewLifecycleOwner,
         Observer {
             adapter.submitList(it)
         })
-
-
+        viewModel.observeProviders().observe(viewLifecycleOwner,
+            Observer{
+                viewModel.scrapeLinks(it.tmdbURL)//posts to StreamData once network request resolves
+            })
 
         adapter.setOnItemClickListener {
             val i = Intent.parseUri(it.streamURL, Intent.URI_INTENT_SCHEME)
@@ -106,9 +107,33 @@ class MiniOneShowFragment(private val data: DiscoverVideoData) : Fragment() {
             addToBackStack("OneShow")
         }
     }
+    private fun initializeObservers(){
+        viewModel.observeDetails().observe(viewLifecycleOwner,
+            Observer {
+
+                if (it.type == ShowType.MOVIE){
+                    //TODO we probably need to update XML layout to include release date info for MOVIE
+                }
+                else{
+                    //TODO we probably need to update XML layout to include release date info for TV
+                    //TODO this can be ShowType.EMPTY now does that matter?
+                }
+            })
+        viewModel.observeCredits().observe(viewLifecycleOwner,
+            Observer {
+                val cast = it.cast
+                val crew = it.crew
+                if (it.type == ShowType.MOVIE){
+                    //TODO we probably need to update XML layout to include credit info for MOVIE another RV perhaps?
+                }
+                else{
+                    //TODO we probably need to update XML layout to include credit info for TV another RV perhaps?
+                }
+            })
+    }
 
     override fun onDestroy() {
-        viewModel.postStreamData(listOf())
+        viewModel.tmdbDetailClear()
         super.onDestroy()
     }
 }

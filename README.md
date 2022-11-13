@@ -1,6 +1,10 @@
 # Dude-Wheres-My-Stream
 Final Project for Android Programming
 
+##11/13/2022:1305
+API calls all appear to be working, trending and favorites tab are working.
+Next steps: update xml for minioneshow and largeoneshow to incorporate all available data. settings tab, search function
+
 ##11/12/2022:2305
 API calls for scraping streaming providers is up and running. all other api calls are implemented but untested
 Next steps test the other api calls for details and credits and update views to make use of this info, settings tab, search function 
@@ -25,3 +29,4 @@ Next steps are to get network functionality implemented and then add in the sear
 ## 11/8/2022:1529
 Trending and Favorites list are working along with the pop up minioneview and oneview fragments.
 Next steps are to get settings and menu overlay working and then move on to API calls
+                         

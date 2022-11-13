@@ -35,8 +35,8 @@ class MiniFavoritesFragment: Fragment() {
             adapter.notifyDataSetChanged()
         })
 
-        adapter.setOnItemClickListener {
-            setFragmentResult("displayMiniOneShow", bundleOf("data" to it,"source" to "Favorites"))
+        adapter.setOnItemClickListener { data ->
+            setFragmentResult("displayMiniOneShow", bundleOf("data" to data))
         }
         return adapter
     }

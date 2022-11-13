@@ -39,6 +39,7 @@ class LargeTrendingFragment: Fragment() {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 addToBackStack("OneShow")
             }
+            viewModel.tmdbDetailRefresh(it)
         }
         return adapter
     }
@@ -54,6 +55,7 @@ class LargeTrendingFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.tmdbTrendingRefresh("1")
         val rvAdapter = initAdapter(binding)
         //TODO lets try to get an infinite scroll going
     }

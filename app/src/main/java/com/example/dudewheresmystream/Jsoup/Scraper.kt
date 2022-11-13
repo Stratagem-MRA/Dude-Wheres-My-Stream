@@ -16,7 +16,6 @@ data class OneStreamData(
 )
 
 class Scraper {
-    //val url = "https://www.themoviedb.org/tv/1402-the-walking-dead/watch?locale=GB"
     //TODO we can get the url above from the TMDb api and pass it to this function
     // possible locale shenanigans as well for viewing if a show might be available in a different country
     //TODO probably need to credit JustWatch where links are provided
@@ -25,7 +24,7 @@ class Scraper {
 
     fun extract(url: String?): List<OneStreamData> {
         if (url.isNullOrBlank()) {
-            return listOf()
+            return emptyList()
         } else {
             val doc = Jsoup.connect(url)
                 .timeout(5000)
@@ -34,21 +33,24 @@ class Scraper {
             //This is hacked in directly from inspecting the html. Goes to the ott_provider class looks for children under the 'Stream' h3 header
             // and then selects the non hidden children on the page
             //Note: some of the streams on TMDb appear not to link to exactly what you would expect from the web page
-            var elements = doc.getElementsByClass("ott_provider")
-            elements = elements.select("h3:contains(Stream)").first().nextElementSiblings()
-            elements = elements.select("li:not(li.hide*) a")
-            //val element = elements[0].attr("href")
-            //val element = elements[0].attr("title")
-            //val element = elements[0].select("img").attr("src")
-            streams = elements.map {
-                OneStreamData(
-                    streamURL = it.attr("href"),
-                    title = it.attr("title"),
-                    titleClipped = trimTitle(it.attr("title")),
-                    streamIconURL = "https://themoviedb.org" + it.select("img").attr("src")
-                )
+            try{
+                var elements = doc.getElementsByClass("ott_provider")
+                elements = elements.select("h3:contains(Stream)").first().nextElementSiblings()//can fail here if the show is available to buy or rent but not to stream
+                elements = elements.select("li:not(li.hide*) a")//ignores links that are hidden on the website
+                streams = elements.map {
+                    OneStreamData(
+                        streamURL = it.attr("href"),
+                        title = it.attr("title"),
+                        titleClipped = trimTitle(it.attr("title")),
+                        streamIconURL = "https://themoviedb.org" + it.select("img").attr("src")
+                    )
+                }
+                return streams
             }
-            return streams
+            catch (e: Throwable){
+                Log.w("Scraper","${e.message}")
+                return emptyList()
+            }
         }
     }
     private fun trimTitle(str: String): String{
