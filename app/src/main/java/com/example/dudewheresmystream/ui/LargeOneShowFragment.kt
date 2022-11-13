@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dudewheresmystream.R
-import com.example.dudewheresmystream.api.DiscoverVideoData
-import com.example.dudewheresmystream.api.ProvidersVideoData
-import com.example.dudewheresmystream.api.ShowType
+import com.example.dudewheresmystream.api.*
 import com.example.dudewheresmystream.databinding.FragmentOneshowBinding
 import com.example.dudewheresmystream.glide.Glide
 
@@ -39,11 +38,12 @@ class LargeOneShowFragment(private val data: DiscoverVideoData): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.glideFetch(data.thumbnailURL!!,binding.thumbnail) //TODO should we be caching these or fetching from web each time?
+        Glide.glideIconFetch(data.thumbnailURL!!,binding.thumbnail) //TODO should we be caching these or fetching from web each time?
         binding.overviewTV.text = data.description //TODO we probably need to add individual elements to handle styling of text such as bolding titles etc.
         binding.title.text = data.nameOrTitle
         initializeFavorite()
-        initializeRV()
+        initializeProviderRV()
+        initializeCastCrewRV()
         initializeObservers()
     }
 
@@ -69,7 +69,7 @@ class LargeOneShowFragment(private val data: DiscoverVideoData): Fragment() {
         }
     }
 
-    private fun initializeRV(){
+    private fun initializeProviderRV(){
         val adapter = StreamProviderAdapter(viewModel)
         binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)//TODO do we like the grid layout manager?
         binding.linkContainerRV.adapter = adapter
@@ -88,30 +88,42 @@ class LargeOneShowFragment(private val data: DiscoverVideoData): Fragment() {
             startActivity(i)
         }
     }
-    private fun initializeObservers(){
-        viewModel.observeDetails().observe(viewLifecycleOwner,
-            Observer {
-
-                if (it.type == ShowType.MOVIE){
-                    //TODO we probably need to update XML layout to include release date info for MOVIE
-                }
-                else{
-                    //TODO we probably need to update XML layout to include release date info for TV
-                    //TODO this can be ShowType.EMPTY now does that matter?
-                }
-            })
+    private fun initializeCastCrewRV(){
+        val adapter = PersonColumnAdapter(viewModel)
+        binding.personRV.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        binding.personRV.adapter = adapter
         viewModel.observeCredits().observe(viewLifecycleOwner,
             Observer {
                 val cast = it.cast
                 val crew = it.crew
+                adapter.submitList(cast+crew)
+            })
+        adapter.setOnItemClickListener { setMiniCastView(it) }
+    }
+
+    private fun initializeObservers(){
+        viewModel.observeDetails().observe(viewLifecycleOwner,
+            Observer {
                 if (it.type == ShowType.MOVIE){
-                    //TODO we probably need to update XML layout to include credit info for MOVIE another RV perhaps?
+                    binding.originalDateTV.text = "Release Date: ${it.releaseDate}"
                 }
                 else{
-                    //TODO we probably need to update XML layout to include credit info for TV another RV perhaps?
-                    //TODO if we use a RV maybe have a minioneshow type frag for cast crew pop ups?
+                    //TODO this can be ShowType.EMPTY now does that matter?
+                    binding.originalDateTV.text = "First Air Date: ${it.firstAirDate}"
                 }
             })
+    }
+
+    private fun setMiniCastView(data: PersonInfo){
+        if (data.personType==PersonType.CAST){
+            val person = data as CastInfo
+            //TODO launch a mini fragment with info on this person
+        }
+        else{
+            val person = data as CrewInfo
+            //TODO launch a mini fragment with info on this person
+            //TODO set up mini frag view in xml layout for largeoneshow see homefragment for reference
+        }
     }
 
     override fun onDestroy() {

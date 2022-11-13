@@ -31,7 +31,7 @@ class StreamProviderAdapter(private val viewModel: MainViewModel)
     override fun onBindViewHolder(holder: VH, position: Int) {
         val binding = holder.streamLinkBinding
         currentList[position].let{
-            Glide.glideFetch(it.streamIconURL,binding.streamProviderThumbnail)
+            Glide.glideIconFetch(it.streamIconURL,binding.streamProviderThumbnail)
         }
     }
 

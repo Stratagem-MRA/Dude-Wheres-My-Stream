@@ -29,9 +29,15 @@
             app:layout_constraintTop_toBottomOf="@id/columnThumbnail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:maxLines="1"
-            android:gravity="center"/>
+            app:layout_constraintBottom_toBottomOf="@id/secondaryColumnTV"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/secondaryColumnTV"
+            app:layout_constraintTop_toBottomOf="@id/columnTV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
         <!--TODO add ellipsis if text view is too long-->
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!--TODO make sure this looks okay, TV should be no wider than image view and should end w/ ... if text is too long-->

@@ -34,7 +34,7 @@ class ShowRowAdapter(private val viewModel: MainViewModel)
         val binding = holder.rowBinding
         currentList[position].let{
             binding.rowTV.text = it.nameOrTitle
-            Glide.glideFetch(it.thumbnailURL!!,binding.rowThumbnail)
+            Glide.glideIconFetch(it.thumbnailURL!!,binding.rowThumbnail)
             //TODO any other items that need to be set on bind?
         }
     }

@@ -1,6 +1,10 @@
 # Dude-Wheres-My-Stream
 Final Project for Android Programming
 
+##11/13/2022:1735
+updated xml layouts for minioneshow and large show to include full network data
+Next steps: update largeshow xml to include a view for a mini fragment for cast/crew. That's the last real item to do before settings and search
+
 ##11/13/2022:1540
 fragment_minioneshow.xml updated
 

@@ -11,7 +11,6 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestOptions
-import com.example.dudewheresmystream.MainActivity
 import com.example.dudewheresmystream.R
 
 
@@ -48,25 +47,21 @@ object Glide {
             return Html.fromHtml(source).toString()
         }
     }
-    // Please ignore, this is for our testing
-    private fun assetFetch(urlString: String, imageView: ImageView) {
+
+    fun glideIconFetch(urlString: String, imageView: ImageView) {
         GlideApp.with(imageView.context)
-            .load(urlString)
+            .load(fromHtml(urlString))
             .apply(glideOptions)
+            .error(R.color.teal_700)//TODO possibly adjust this was color.colorAccent before
             .override(width, height)
             .into(imageView)
     }
-    fun glideFetch(urlString: String, imageView: ImageView) {
-        if (MainActivity.globalDebug) {
-           assetFetch(urlString, imageView)
-        } else {
-            GlideApp.with(imageView.context)
-                .asBitmap() // Try to display animated Gifs and video still
-                .load(fromHtml(urlString))
-                .apply(glideOptions)
-                .error(R.color.teal_700)//TODO possibly adjust this was color.colorAccent before
-                .override(width, height)//TODO does this need to be adjusted?
-                .into(imageView)
-        }
+    fun glidePersonFetch(urlString: String, imageView: ImageView){
+        GlideApp.with(imageView.context)
+            .load(fromHtml(urlString))
+            .apply(glideOptions)
+            .error(R.drawable.blankprofile)
+            .override(width, height)
+            .into(imageView)
     }
 }

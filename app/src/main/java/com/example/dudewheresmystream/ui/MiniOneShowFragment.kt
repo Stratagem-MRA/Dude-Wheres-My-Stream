@@ -2,7 +2,6 @@ package com.example.dudewheresmystream.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +40,7 @@ class MiniOneShowFragment(private val data: DiscoverVideoData) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.glideFetch(data.thumbnailURL,binding.thumbnail)
+        Glide.glideIconFetch(data.thumbnailURL,binding.thumbnail)
         binding.overviewTV.text = data.description
         binding.title.text = data.nameOrTitle
         binding.seeMoreButton.setOnClickListener { launchSeeMore() }
@@ -107,6 +106,7 @@ class MiniOneShowFragment(private val data: DiscoverVideoData) : Fragment() {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             addToBackStack("OneShow")
         }
+        viewModel.tmdbDetailRefresh(data)
     }
     private fun initializeObservers(){
         viewModel.observeDetails().observe(viewLifecycleOwner,
@@ -125,17 +125,17 @@ class MiniOneShowFragment(private val data: DiscoverVideoData) : Fragment() {
                 if(cast.size >=1) {
                     binding.miniCastName1.text = cast[0].name
                     binding.miniCastRole1.text = cast[0].character
-                    Glide.glideFetch(cast[0].profilePicURL, binding.miniCastImg1)
+                    Glide.glideIconFetch(cast[0].profilePicURL, binding.miniCastImg1)
                 }
                 if(cast.size >=2) {
                     binding.miniCastName2.text = cast[1].name
                     binding.miniCastRole2.text = cast[1].character
-                    Glide.glideFetch(cast[1].profilePicURL, binding.miniCastImg2)
+                    Glide.glideIconFetch(cast[1].profilePicURL, binding.miniCastImg2)
                 }
                 if(cast.size >=3) {
                     binding.miniCastName3.text = cast[2].name
                     binding.miniCastRole3.text = cast[2].character
-                    Glide.glideFetch(cast[2].profilePicURL, binding.miniCastImg3)
+                    Glide.glideIconFetch(cast[2].profilePicURL, binding.miniCastImg3)
                 }
             })
     }

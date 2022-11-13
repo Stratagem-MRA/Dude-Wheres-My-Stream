@@ -1,5 +1,6 @@
 package com.example.dudewheresmystream.ui
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -21,7 +22,8 @@ class ShowColumnAdapter(private val viewModel: MainViewModel)
             columnBinding.root.setOnClickListener {
                 listener?.invoke(currentList[adapterPosition])
             }
-
+            columnBinding.columnTV.maxLines = 1
+            columnBinding.columnTV.gravity = Gravity.CENTER
         }
     }
 
@@ -35,7 +37,7 @@ class ShowColumnAdapter(private val viewModel: MainViewModel)
         val binding = holder.columnBinding
         currentList[position].let{
             binding.columnTV.text = it.nameOrTitle
-            Glide.glideFetch(it.thumbnailURL,binding.columnThumbnail)
+            Glide.glideIconFetch(it.thumbnailURL,binding.columnThumbnail)
         }
     }
 

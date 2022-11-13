@@ -73,7 +73,7 @@ data class CastInfo(
     val creditID: String,
     @SerializedName("order")
     val order: Int
-)
+): PersonInfo(PersonType.CAST)
 
 data class CrewInfo(
     @SerializedName("adult")
@@ -98,8 +98,15 @@ data class CrewInfo(
     val department: String,
     @SerializedName("job")
     val job: String
+): PersonInfo(PersonType.CREW)
+
+open class PersonInfo(
+    val personType: PersonType
 )
 
-enum class ShowType{//TODO is this used
-TV, MOVIE, EMPTY
+enum class ShowType{
+    TV, MOVIE, EMPTY
+}
+enum class PersonType{
+    CAST,CREW
 }
