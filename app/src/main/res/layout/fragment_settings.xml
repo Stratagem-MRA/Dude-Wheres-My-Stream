@@ -1,60 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <!-- TODO options not formatted at all yet -->
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Theme:"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_margin="12dp"/>
-        <ToggleButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="12dp"/>
-    </LinearLayout>
-    <!-- TODO add borders in between options -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Streaming App Preferences:"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_margin="12dp"/>
-        <androidx.appcompat.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="12dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Country:"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_margin="12dp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- TODO options not formatted at all yet -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="12dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Dark mode"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_weight="1"/>
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/darkModeSwitch"/>
+        </LinearLayout>
+        <!-- TODO add borders in between options -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_margin="12dp"
-            android:text="fake button"/>
+            android:id="@+id/providerSetting">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Preferred streaming providers"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="None"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="12dp"
+            android:id="@+id/regionSetting">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Region"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="United States"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/settingsDimmerView"
+        android:background="@color/black"
+        android:alpha="0.75"
+        android:clickable="false"
+        android:visibility="invisible"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/miniConstraint">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/settingsPopup"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/guidelineBottom"
+            app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
+            app:layout_constraintStart_toEndOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/guidelineTop"
+            android:visibility="invisible"
+            android:clickable="false"
+            tools:layout="@layout/fragment_settings_popup"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0625" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9375" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.0625"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9375"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
