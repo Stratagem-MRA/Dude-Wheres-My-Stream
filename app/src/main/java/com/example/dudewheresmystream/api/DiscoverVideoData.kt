@@ -104,6 +104,12 @@ open class PersonInfo(
     val personType: PersonType
 )
 
+data class SettingData(
+    val name: String,
+    val id: String
+)
+
+
 enum class ShowType{
     TV, MOVIE, EMPTY
 }
