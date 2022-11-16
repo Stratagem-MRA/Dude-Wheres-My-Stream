@@ -8,5 +8,5 @@
         android:id="@+id/RVHorizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <!--TODO is there any layout magic we can do to make an arrow appear if there are more items in a direction?-->
+    <!--TODO v2 feature: make an arrow overlay appear if there are more items in a direction-->
 </LinearLayout>

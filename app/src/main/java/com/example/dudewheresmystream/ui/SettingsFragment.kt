@@ -36,14 +36,11 @@ class SettingsFragment():Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO create actual settings w/ ids
-        //TODO set on click listeners
-        binding.darkModeSwitch.setOnCheckedChangeListener { _, b ->
-            //TODO darkmode stuff b is the true false value of the switch
-        }
+
+        /*binding.darkModeSwitch.setOnCheckedChangeListener { _, b ->
+            //TODO v2 feature: darkmode stuff b is the true false value of the switch
+        }*/
         binding.providerSetting.setOnClickListener {
-            //TODO replace binding.settingsPopup with a new fragment_settings_popup fragment that uses fragment_settings_popup.xml
-            //TODO create an adapter for the RV that populates with checkboxes as multiple selections are allowed
             setMiniSettings(SettingOption.PROVIDER, miniProvTag)
         }
         binding.regionSetting.setOnClickListener{

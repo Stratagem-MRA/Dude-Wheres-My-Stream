@@ -67,7 +67,7 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         addTrendingFrag()
         addFavoritesFrag()
-        viewModel.tmdbTrendingRefresh("1")//TODO possibly add provider/region codes from settings here
+        viewModel.tmdbTrendingRefresh("1")
         childFragmentManager.setFragmentResultListener("displayMiniOneShow", viewLifecycleOwner){key, bundle ->
             val data = bundle.get("data") as DiscoverVideoData
             setMiniOneShow(data)

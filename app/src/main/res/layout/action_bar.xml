@@ -3,7 +3,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <!--TODO prettify this stuff, possibly add a title text to be updated with LiveData?-->
+    <!--TODO v2 feature: prettify, add LiveData dynamic title-->
     <EditText
             android:id="@+id/actionSearch"
             android:layout_width="0dp"

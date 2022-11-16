@@ -40,12 +40,14 @@ class MainViewModel: ViewModel() {
         }
     }
 
-    fun tmdbTrendingRefresh(pageToLoad: String, providerCode:String = "", regionCode:String = ""){
+    fun tmdbTrendingRefresh(pageToLoad: String){
         tmdbFetchDone.postValue(false)
 
         viewModelScope.launch(
         context = viewModelScope.coroutineContext + Dispatchers.IO){
-            postTrending(tmdbRepo.getTMDBTrendingInfo(pageToLoad,providerCode,regionCode))
+            val providers = formatProviders()
+            val region = region.value!!.id
+            postTrending(tmdbRepo.getTMDBTrendingInfo(pageToLoad,providers,region))
             tmdbFetchDone.postValue(true)
         }
     }
@@ -53,7 +55,7 @@ class MainViewModel: ViewModel() {
     fun tmdbDetailRefresh(vd: DiscoverVideoData){
         viewModelScope.launch(
             context = viewModelScope.coroutineContext + Dispatchers.IO){
-            postProviders(tmdbRepo.getTMDBProviders(vd))
+            postProviders(tmdbRepo.getTMDBProviders(vd, region.value!!.id))
             postDetails(tmdbRepo.getTMDBDetail(vd))
             postCredits(tmdbRepo.getTMDBCredits(vd))
         }
@@ -153,5 +155,15 @@ class MainViewModel: ViewModel() {
     }
     fun observePreferredProviders(): MutableLiveData<List<SettingData>>{
         return preferredProviders
+    }
+    private fun formatProviders(): String{
+        val providersSettings = preferredProviders.value!!
+        var result = ""
+        for (setting in providersSettings){
+            result += setting.id + ","
+        }
+        Log.d("",preferredProviders.value.toString())
+        Log.d("",result)
+        return result
     }
 }

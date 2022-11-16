@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dudewheresmystream.databinding.FragmentRvHorizontalBinding
 
 class MiniFavoritesFragment: Fragment() {
-    //TODO closing app via back button then relaunching clears the favorites list. How can we solve this? I think HW4 addressed this in a comment somewhere
+    //TODO Note: closing app via back button then relaunching clears the favorites list sometimes. How can we solve this? I think an instructor comment addressed something similar somewhere...
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentRvHorizontalBinding? = null
     private val binding get() = _binding!!

@@ -52,7 +52,7 @@ object Glide {
         GlideApp.with(imageView.context)
             .load(fromHtml(urlString))
             .apply(glideOptions)
-            .error(R.color.teal_700)//TODO possibly adjust this was color.colorAccent before
+            .error(R.color.teal_700)
             .override(width, height)
             .into(imageView)
     }

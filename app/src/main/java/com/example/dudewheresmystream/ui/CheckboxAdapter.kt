@@ -48,7 +48,6 @@ class CheckboxAdapter(private val viewModel: MainViewModel)
                 binding.checkbox.isChecked = false
             }
         }
-        //TODO set a listener on TV to also check the radio button?
     }
 
     override fun getItemCount(): Int {

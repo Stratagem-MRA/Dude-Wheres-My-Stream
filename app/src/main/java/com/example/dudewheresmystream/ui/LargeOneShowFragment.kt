@@ -38,8 +38,8 @@ class LargeOneShowFragment(private val data: DiscoverVideoData): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Glide.glideIconFetch(data.thumbnailURL!!,binding.thumbnail) //TODO should we be caching these or fetching from web each time?
-        binding.overviewTV.text = data.description //TODO we probably need to add individual elements to handle styling of text such as bolding titles etc.
+        Glide.glideIconFetch(data.thumbnailURL!!,binding.thumbnail) //TODO v2 feature: caching
+        binding.overviewTV.text = data.description
         binding.title.text = data.nameOrTitle
         initializeFavorite()
         initializeProviderRV()
@@ -71,11 +71,11 @@ class LargeOneShowFragment(private val data: DiscoverVideoData): Fragment() {
 
     private fun initializeProviderRV(){
         val adapter = StreamProviderAdapter(viewModel)
-        binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)//TODO do we like the grid layout manager?
+        binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)
         binding.linkContainerRV.adapter = adapter
         viewModel.observeProviders().observe(viewLifecycleOwner,
             Observer{
-                viewModel.scrapeLinks(it.tmdbURL)//posts to StreamData once network request resolves//TODO does this work even with the network call to fetch this data
+                viewModel.scrapeLinks(it.tmdbURL)//posts to StreamData once network request resolves
             })
         viewModel.observeStreamData().observe(viewLifecycleOwner,
             Observer {
@@ -108,21 +108,18 @@ class LargeOneShowFragment(private val data: DiscoverVideoData): Fragment() {
                     binding.originalDateTV.text = "Release Date: ${it.releaseDate}"
                 }
                 else{
-                    //TODO this can be ShowType.EMPTY now does that matter?
                     binding.originalDateTV.text = "First Air Date: ${it.firstAirDate}"
                 }
             })
     }
 
     private fun setMiniCastView(data: PersonInfo){
+        //TODO v2 feature: mini view for person, would need to set up mini frag view in xml layout for largeoneshow see homefragment for reference
         if (data.personType==PersonType.CAST){
             val person = data as CastInfo
-            //TODO launch a mini fragment with info on this person
         }
         else{
             val person = data as CrewInfo
-            //TODO launch a mini fragment with info on this person
-            //TODO set up mini frag view in xml layout for largeoneshow see homefragment for reference
         }
     }
 

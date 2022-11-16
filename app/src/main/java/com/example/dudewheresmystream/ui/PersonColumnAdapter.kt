@@ -9,7 +9,7 @@ import com.example.dudewheresmystream.api.*
 import com.example.dudewheresmystream.databinding.ColumnBinding
 import com.example.dudewheresmystream.glide.Glide
 
-//TODO Repurpose this for cast/crew RV
+
 class PersonColumnAdapter(private val viewModel: MainViewModel)
     : ListAdapter<PersonInfo, PersonColumnAdapter.VH>(PersonDiff()){
 

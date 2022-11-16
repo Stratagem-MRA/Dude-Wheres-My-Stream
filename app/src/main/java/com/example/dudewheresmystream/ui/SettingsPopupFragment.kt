@@ -59,8 +59,6 @@ class SettingsPopupFragment(private val option: SettingOption): Fragment() {
             parentFragmentManager.popBackStack()
         }
 
-        //TODO create adapter .kt and .xml probably create an apply button in this existing fragment to confirm changes otherwise keep them as they were before
-        //TODO go to viewmodel and set up data for monitoring settings
     }
     private fun initRegion(){
         binding.popupTitle.text = "Region Settings"

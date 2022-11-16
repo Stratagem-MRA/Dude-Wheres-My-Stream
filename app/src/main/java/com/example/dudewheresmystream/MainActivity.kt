@@ -200,5 +200,5 @@ class MainActivity : AppCompatActivity(){
             addToBackStack(aboutFragTag)
         }
     }
-    //TODO RVs in the home fragment should be limited to a certain number of items and then add a display more button at the end that opens up the respective Large Fragment
+    //TODO add a see more link at the end of the trending and favorite RVs
 }

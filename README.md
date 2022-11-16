@@ -1,6 +1,10 @@
 # Dude-Wheres-My-Stream
 Final Project for Android Programming
 
+##11/15/2022:2015
+settings are working and api calls are updated to include provider preferences and watch_region
+Next steps: search function!!!
+
 ##11/15/2022:1845
 settings fragment working except for dark mode (dark mode functionality likely to get axed from submission) settings are saved as livedata in viewmodel
 Next steps: modify api calls to make use of watch providers and region codes where possible, search function

@@ -16,7 +16,7 @@ import com.example.dudewheresmystream.databinding.RadioRowBinding
 class RadioAdapter(private val viewModel: MainViewModel)
     : ListAdapter<SettingData,RadioAdapter.VH>(RadioDiff()) {
     inner class VH(val rowBinding:RadioRowBinding): RecyclerView.ViewHolder(rowBinding.root){}
-    private var currentSelection: SettingData = viewModel.observeRegion().value!! //TODO may want to ask user for their region on starting the app//TODO maybe observe this value from viewModel
+    private var currentSelection: SettingData = viewModel.observeRegion().value!! //TODO v2 feature: asking user for their region on starting the app
     private var lastRadioSelected: RadioButton? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -50,7 +50,6 @@ class RadioAdapter(private val viewModel: MainViewModel)
             lastRadioSelected = binding.radioButton
             currentSelection = currentList[position]
         }
-        //TODO set a listener on TV to also check the radio button?
     }
 
     override fun getItemCount(): Int {

@@ -49,10 +49,10 @@ class ShowColumnAdapter(private val viewModel: MainViewModel)
 
     class VideoDiff : DiffUtil.ItemCallback<DiscoverVideoData>(){
         override fun areItemsTheSame(oldItem: DiscoverVideoData, newItem: DiscoverVideoData): Boolean {
-            return oldItem.description == newItem.description//TODO double check this
+            return oldItem.description == newItem.description
         }
         override fun areContentsTheSame(oldItem: DiscoverVideoData, newItem: DiscoverVideoData): Boolean {
-            return oldItem.description == newItem.description//TODO double check this
+            return oldItem.description == newItem.description
         }
     }
 

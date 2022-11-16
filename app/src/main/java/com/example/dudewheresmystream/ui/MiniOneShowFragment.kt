@@ -52,7 +52,7 @@ class MiniOneShowFragment(private val data: DiscoverVideoData) : Fragment() {
 
     private fun initializeRV(){
         val adapter = StreamProviderAdapter(viewModel)
-        binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)//TODO do we like the grid layout manager?
+        binding.linkContainerRV.layoutManager = GridLayoutManager(activity,2)
         binding.linkContainerRV.adapter = adapter
 
 
@@ -115,7 +115,6 @@ class MiniOneShowFragment(private val data: DiscoverVideoData) : Fragment() {
                     binding.originalDateTV.text = "Release Date: ${it.releaseDate}"
                 }
                 else{
-                    //TODO this can be ShowType.EMPTY now does that matter?
                     binding.originalDateTV.text = "First Air Date: ${it.firstAirDate}"
                 }
             })

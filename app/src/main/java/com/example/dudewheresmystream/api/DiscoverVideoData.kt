@@ -2,13 +2,13 @@ package com.example.dudewheresmystream.api
 
 import com.google.gson.annotations.SerializedName
 
-data class DiscoverVideoData(//TODO there are differences in the field names for tv shows and movies that we need to account for
-    @SerializedName("name")//TODO this only applies to TV
+data class DiscoverVideoData(
+    @SerializedName("name")//This only applies to TV
     val name: String?,
-    @SerializedName("title")//TODO this only applies to Movie
+    @SerializedName("title")//This only applies to Movie
     val title: String?,
     @SerializedName("genre_ids")
-    val genreIDs: List<Int>,//TODO Make this an enum
+    val genreIDs: List<Int>,//TODO v2 feature: create enum map for this
     @SerializedName("poster_path")
     val thumbnailURL: String,
     @SerializedName("overview")
@@ -23,7 +23,7 @@ data class DiscoverVideoData(//TODO there are differences in the field names for
     val nameOrTitle: String,
     val type: ShowType
 
-): java.io.Serializable //TODO do we need this?
+): java.io.Serializable
 
 data class DetailsVideoData(
     @SerializedName("release_date")
@@ -44,7 +44,7 @@ data class CreditsVideoData(
 )
 
 data class ProvidersVideoData(
-    @SerializedName("tmdbURL")//TODO watch providers
+    @SerializedName("tmdbURL")
     val tmdbURL: String?
 )
 

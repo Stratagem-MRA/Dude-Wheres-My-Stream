@@ -30,7 +30,6 @@ class LargeTrendingFragment: Fragment() {
         viewModel.observeTrending().observe(viewLifecycleOwner,
             Observer{ trendingPostList ->
                 adapter.submitList(trendingPostList)
-                //TODO do we want to lengthen this list or shorten the mini fragment version somehow?
             })
 
         adapter.setOnItemClickListener {
@@ -57,7 +56,7 @@ class LargeTrendingFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.tmdbTrendingRefresh("1")
         val rvAdapter = initAdapter(binding)
-        //TODO lets try to get an infinite scroll going
+        //TODO v2 feature: infinite scroll
     }
 
 }

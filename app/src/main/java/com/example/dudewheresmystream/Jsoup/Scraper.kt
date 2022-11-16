@@ -11,13 +11,11 @@ private lateinit var streams: List<OneStreamData>
 data class OneStreamData(
     val streamURL: String,
     val title: String,
-    val titleClipped: String,//TODO do we need to keep track of the stream provider title?
+    val titleClipped: String,
     val streamIconURL: String
 )
 
 class Scraper {
-    //TODO we can get the url above from the TMDb api and pass it to this function
-    // possible locale shenanigans as well for viewing if a show might be available in a different country
     //TODO probably need to credit JustWatch where links are provided
 
 

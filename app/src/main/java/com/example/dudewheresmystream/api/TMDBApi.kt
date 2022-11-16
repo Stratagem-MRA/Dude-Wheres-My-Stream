@@ -18,15 +18,15 @@ import java.lang.reflect.Type
 interface TMDBApi {
     @GET("/3/discover/movie?language=en-US&sort_by=popularity.desc&include_video=false&with_watch_monetization_types=flatrate")
     suspend fun getTMDBTrendingMovieInfo(
-        @Query("api_key") apiKey: String,//TODO this is fixed but is it best practice to leave it in the @GET statement or load it elsewhere???
-        @Query("page") numPages: String,//TODO possible to use 1 page for home screen mini fragment and then XXX pages for the main fragment
+        @Query("api_key") apiKey: String,
+        @Query("page") numPages: String,
         @Query("with_watch_providers") providerCodes: String,//Note: comma separated list is valid here
         @Query("watch_region") regionCode: String) : TMDBResponse
 
     @GET("/3/discover/tv?language=en-US&sort_by=popularity.desc&include_video=false&with_watch_monetization_types=flatrate")
     suspend fun getTMDBTrendingTVInfo(
         @Query("api_key") apiKey: String,
-        @Query("page") numPages: String,//TODO possible to use 1 page for home screen mini fragment and then XXX pages for the main fragment?
+        @Query("page") numPages: String,
         @Query("with_watch_providers") providerCodes: String,//Note: comma separated list is valid here
         @Query("watch_region") regionCode: String) : TMDBResponse
 
@@ -56,13 +56,13 @@ interface TMDBApi {
     ) : CreditsVideoData
 
     @GET("/3/movie/{movie_id}/watch/providers?language=en-US")
-    suspend fun getTMDBMovieProviders(//TODO need to grab "link" from this call and then alter the locale parameter in the url to match our selected region
+    suspend fun getTMDBMovieProviders(
         @Path("movie_id") movieID: String,
         @Query("api_key") apiKey: String,
     ) : ProviderResponse
 
     @GET("/3/tv/{tv_id}/watch/providers?language=en-US")
-    suspend fun getTMDBTVProviders(//TODO need to grab "link" from this call and then alter the locale parameter in the url to match our selected region
+    suspend fun getTMDBTVProviders(
         @Path("tv_id") tvID: String,
         @Query("api_key") apiKey: String,
     ) : ProviderResponse
@@ -73,7 +73,7 @@ interface TMDBApi {
 
     class TMDBResponse(val results: List<DiscoverVideoData>)
 
-    class ProviderResponse(val map: Map<String,String>)//TODO possibly add another response class ",val flatrate:NewResponse" if we want provider_name/logoURL
+    class ProviderResponse(val map: Map<String,String>)
     class ProviderResponseDeserializer: JsonDeserializer<ProviderResponse>{
         override fun deserialize(
             json: JsonElement,
@@ -97,7 +97,7 @@ interface TMDBApi {
     companion object {
         private fun buildGsonConverterFactory(): GsonConverterFactory {
             val gsonBuilder = GsonBuilder()
-                .registerTypeAdapter(ProviderResponse::class.java, ProviderResponseDeserializer())//TODO confirm this
+                .registerTypeAdapter(ProviderResponse::class.java, ProviderResponseDeserializer())
             return GsonConverterFactory.create(gsonBuilder.create())
         }
 

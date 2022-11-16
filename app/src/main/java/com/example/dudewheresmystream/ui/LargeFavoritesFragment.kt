@@ -32,7 +32,6 @@ class LargeFavoritesFragment: Fragment() {
             Observer{ favoritesPostList ->
                 adapter.submitList(favoritesPostList)
                 adapter.notifyDataSetChanged()
-                //TODO do we want to lengthen this list or shorten the mini fragment version somehow?
             })
 
         adapter.setOnItemClickListener {

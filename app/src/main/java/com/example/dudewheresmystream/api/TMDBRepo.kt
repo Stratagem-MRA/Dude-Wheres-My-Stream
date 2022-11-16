@@ -82,18 +82,16 @@ class TMDBRepo(private val tmdbApi: TMDBApi) {
         }
     }
 
-    suspend fun getTMDBProviders(vd: DiscoverVideoData): ProvidersVideoData{
+    suspend fun getTMDBProviders(vd: DiscoverVideoData, regionCode: String): ProvidersVideoData{
         return if(vd.type == ShowType.MOVIE){
-            val test = tmdbApi.getTMDBMovieProviders(vd.tmdbID.toString(),tmdbAPIKey)
-            Log.d("","available MOVIE regions: ${test.map.keys}")
-            ProvidersVideoData(test.map["US"])//TODO update to reference current region from settings
+            val providers = tmdbApi.getTMDBMovieProviders(vd.tmdbID.toString(),tmdbAPIKey)
+            Log.d("","available MOVIE regions: ${providers.map.keys}")
+            ProvidersVideoData(providers.map[regionCode])
         }
         else{
-            val test = tmdbApi.getTMDBTVProviders(vd.tmdbID.toString(),tmdbAPIKey)
-            Log.d("","available TV regions: ${test.map.keys}")
-            ProvidersVideoData(test.map["US"])//TODO update to reference current region from settings
-            //TODO doesnt run in one show fragment
-            //TODO need to make sure trending is pulling in only streaming media
+            val providers = tmdbApi.getTMDBTVProviders(vd.tmdbID.toString(),tmdbAPIKey)
+            Log.d("","available TV regions: ${providers.map.keys}")
+            ProvidersVideoData(providers.map[regionCode])
         }
     }
 }

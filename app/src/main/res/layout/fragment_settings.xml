@@ -9,26 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <!-- TODO options not formatted at all yet -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="12dp">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="Dark mode"
-                android:gravity="center_vertical"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_weight="1"/>
-            <androidx.appcompat.widget.SwitchCompat
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/darkModeSwitch"/>
-        </LinearLayout>
-        <!-- TODO add borders in between options -->
+        <!--TODO v2 feature: darkmode option would go here-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

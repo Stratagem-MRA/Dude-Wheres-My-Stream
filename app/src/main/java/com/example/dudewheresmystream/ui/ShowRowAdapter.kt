@@ -35,7 +35,6 @@ class ShowRowAdapter(private val viewModel: MainViewModel)
         currentList[position].let{
             binding.rowTV.text = it.nameOrTitle
             Glide.glideIconFetch(it.thumbnailURL!!,binding.rowThumbnail)
-            //TODO any other items that need to be set on bind?
         }
     }
 
@@ -47,10 +46,10 @@ class ShowRowAdapter(private val viewModel: MainViewModel)
 
     class VideoDiff : DiffUtil.ItemCallback<DiscoverVideoData>(){
         override fun areItemsTheSame(oldItem: DiscoverVideoData, newItem: DiscoverVideoData): Boolean {
-            return oldItem.description == newItem.description //TODO double check this
+            return oldItem.description == newItem.description
         }
         override fun areContentsTheSame(oldItem: DiscoverVideoData, newItem: DiscoverVideoData): Boolean {
-            return oldItem.description == newItem.description//TODO double check this
+            return oldItem.description == newItem.description
         }
     }
 
