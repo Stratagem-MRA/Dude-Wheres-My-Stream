@@ -1,6 +1,10 @@
 # Dude-Wheres-My-Stream
 Final Project for Android Programming
 
+##11/15/2022:1845
+settings fragment working except for dark mode (dark mode functionality likely to get axed from submission) settings are saved as livedata in viewmodel
+Next steps: modify api calls to make use of watch providers and region codes where possible, search function
+
 ##11/13/2022:2255
 settings fragment xml layout has been updated to include all planned settings
 Next steps: create adapter for popup settings RV also create the actual fragments for region and provider settings, livedata in viewmodel to hold setting values, search function

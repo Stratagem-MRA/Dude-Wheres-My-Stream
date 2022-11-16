@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import com.example.dudewheresmystream.R
 import com.example.dudewheresmystream.databinding.FragmentSettingsBinding
 
@@ -37,9 +38,8 @@ class SettingsFragment():Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //TODO create actual settings w/ ids
         //TODO set on click listeners
-        binding.darkModeSwitch.setOnCheckedChangeListener { compoundButton, b ->
-            Log.d("","compund.isChecked:${compoundButton.isChecked}\tb val:$b")
-            //TODO darkmode stuff
+        binding.darkModeSwitch.setOnCheckedChangeListener { _, b ->
+            //TODO darkmode stuff b is the true false value of the switch
         }
         binding.providerSetting.setOnClickListener {
             //TODO replace binding.settingsPopup with a new fragment_settings_popup fragment that uses fragment_settings_popup.xml
@@ -47,8 +47,6 @@ class SettingsFragment():Fragment() {
             setMiniSettings(SettingOption.PROVIDER, miniProvTag)
         }
         binding.regionSetting.setOnClickListener{
-            //TODO replace binding.settingsPopup with a new fragment_settings_popup fragment that uses fragment_settings_popup.xml
-            //TODO create an adapter for the RV that populates a radiogroup as only one selection is allowed
             setMiniSettings(SettingOption.REGION, miniRegionTag)
         }
 
@@ -60,6 +58,20 @@ class SettingsFragment():Fragment() {
         binding.settingsDimmerView.setOnClickListener{
             childFragmentManager.popBackStack()
         }
+        viewModel.observePreferredProviders().observe(viewLifecycleOwner,
+            Observer {
+                val output = it.joinToString {data -> data.name }
+                if(output!="") {
+                    binding.providerSettingsDescription.text = output
+                }
+                else{
+                    binding.providerSettingsDescription.text = "None"
+                }
+            })
+        viewModel.observeRegion().observe(viewLifecycleOwner,
+        Observer {
+            binding.regionSettingsDescription.text = it.name
+        })
     }
 
     private fun setMiniSettings(option: SettingOption, tag:String){

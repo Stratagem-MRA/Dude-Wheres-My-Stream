@@ -27,6 +27,9 @@ class MainViewModel: ViewModel() {
     private var searchData = MutableLiveData<List<DiscoverVideoData>>()
     private var searchTerm = MutableLiveData<String>()
 
+    private var region: MutableLiveData<SettingData> = MutableLiveData(SettingData("United States","US"))
+    private var preferredProviders: MutableLiveData<List<SettingData>> = MutableLiveData(emptyList())
+
 
     init{
         if(MainActivity.globalDebug){
@@ -135,5 +138,20 @@ class MainViewModel: ViewModel() {
 
     fun observeSearch(): MutableLiveData<List<DiscoverVideoData>> {
         return searchData
+    }
+
+
+    fun postRegion(data: SettingData){
+        region.value = data
+    }
+    fun observeRegion(): MutableLiveData<SettingData> {
+        return region
+    }
+
+    fun postPreferredProviders(data :List<SettingData>){
+        preferredProviders.value = data
+    }
+    fun observePreferredProviders(): MutableLiveData<List<SettingData>>{
+        return preferredProviders
     }
 }
