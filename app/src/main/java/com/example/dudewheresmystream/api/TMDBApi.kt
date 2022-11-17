@@ -67,9 +67,12 @@ interface TMDBApi {
         @Query("api_key") apiKey: String,
     ) : ProviderResponse
 
-
-
-    //TODO probably some @GET functions for searching
+    @GET("/3/search/multi?language=en-US")
+    suspend fun getTMDBMultiSearch(
+        @Query("api_key") apiKey: String,
+        @Query("query") query: String,
+        @Query("page") page: String
+    ) : TMDBResponse
 
     class TMDBResponse(val results: List<DiscoverVideoData>)
 
@@ -83,7 +86,9 @@ interface TMDBApi {
             return try{
                 val result = HashMap<String,String>()
                 json.asJsonObject.get("results").asJsonObject.entrySet().map {
-                    result.put(it.key,it.value.asJsonObject.get("link").asString)
+                    if(it.value.asJsonObject.get("flatrate") != null) {
+                        result[it.key] = it.value.asJsonObject.get("link").asString
+                    }
                 }
                 ProviderResponse(result)
             } catch(e: Throwable){

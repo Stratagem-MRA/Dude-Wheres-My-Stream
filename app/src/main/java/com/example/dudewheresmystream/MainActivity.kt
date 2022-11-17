@@ -3,11 +3,11 @@ package com.example.dudewheresmystream
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.ActionBar
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -115,6 +115,7 @@ class MainActivity : AppCompatActivity(){
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
         actionBarBinding!!.actionSearch.clearFocus()
+        actionBarBinding!!.actionSearch.isCursorVisible = false
     }
     private fun initActionBar(actionBar: ActionBar){
         actionBar.setDisplayShowTitleEnabled(false)
@@ -126,11 +127,18 @@ class MainActivity : AppCompatActivity(){
 
     private fun actionBarSearch(){
         actionBarBinding!!.actionSearch.addTextChangedListener {
-            //TODO implement search functionality here
-            //TODO functionality should be the same across fragments and should have bar hidden in settings fragment
             if (it.toString().isEmpty()){
                 hideKeyboard()
             }
+        }
+        actionBarBinding!!.actionSearch.setOnKeyListener { view, i, keyEvent ->
+            if (i == KeyEvent.KEYCODE_ENTER && keyEvent.action == KeyEvent.ACTION_UP){
+                launchSearch(actionBarBinding!!.actionSearch.text.toString())
+                actionBarBinding!!.actionSearch.text.clear()
+                hideKeyboard()
+                true
+            }
+            false
         }
     }
 
@@ -183,10 +191,11 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    private fun launchSearch(){
+    private fun launchSearch(text:String  = ""){
+        Log.d("","Launching search with text: $text")
         clearBackstack()
         supportFragmentManager.commit {
-            replace(R.id.main_frame, SearchFragment.newInstance(), searchFragTag)
+            replace(R.id.main_frame, SearchFragment.newInstance(text), searchFragTag)
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             addToBackStack(searchFragTag)
         }
@@ -200,5 +209,5 @@ class MainActivity : AppCompatActivity(){
             addToBackStack(aboutFragTag)
         }
     }
-    //TODO add a see more link at the end of the trending and favorite RVs
+    //TODO v2 feature: add a see more link at the end of the trending and favorite RVs
 }

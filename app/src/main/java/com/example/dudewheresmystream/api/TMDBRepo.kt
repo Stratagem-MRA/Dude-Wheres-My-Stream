@@ -26,6 +26,7 @@ class TMDBRepo(private val tmdbApi: TMDBApi) {
                 tmdbID = it.tmdbID,
                 popularity = it.popularity,
                 stars = it.stars,
+                mediaType = "tv",
                 nameOrTitle = if(it.title.isNullOrBlank()) it.name!! else it.title,
                 type = ShowType.TV)
         }
@@ -41,6 +42,7 @@ class TMDBRepo(private val tmdbApi: TMDBApi) {
                 tmdbID = it.tmdbID,
                 popularity = it.popularity,
                 stars = it.stars,
+                mediaType = "movie",
                 nameOrTitle = if(it.title.isNullOrBlank()) it.name!! else it.title,
                 type = ShowType.MOVIE)
         }
@@ -86,13 +88,33 @@ class TMDBRepo(private val tmdbApi: TMDBApi) {
         return if(vd.type == ShowType.MOVIE){
             val providers = tmdbApi.getTMDBMovieProviders(vd.tmdbID.toString(),tmdbAPIKey)
             Log.d("","available MOVIE regions: ${providers.map.keys}")
-            ProvidersVideoData(providers.map[regionCode])
+            ProvidersVideoData(providers.map[regionCode],providers.map.keys.toList())
         }
         else{
             val providers = tmdbApi.getTMDBTVProviders(vd.tmdbID.toString(),tmdbAPIKey)
             Log.d("","available TV regions: ${providers.map.keys}")
-            ProvidersVideoData(providers.map[regionCode])
+            ProvidersVideoData(providers.map[regionCode],providers.map.keys.toList())
         }
+    }
+
+    suspend fun getTMDBSearch(query: String, page:Int = 1): List<DiscoverVideoData>{
+        val tmdbSearchResponse = tmdbApi.getTMDBMultiSearch(tmdbAPIKey,query,page.toString())
+        val tmdbListing = tmdbSearchResponse.results.map {
+            DiscoverVideoData(
+                name = if(it.name.isNullOrBlank()) "" else it.name,
+                title = if(it.title.isNullOrBlank()) "" else it.title,
+                genreIDs = if(it.genreIDs.isNullOrEmpty()) listOf() else it.genreIDs,
+                thumbnailURL = "https://image.tmdb.org/t/p/original${it.thumbnailURL}",
+                description = if(it.description.isNullOrBlank()) "" else it.description,
+                tmdbID = it.tmdbID,
+                popularity = it.popularity,
+                stars = it.stars,
+                mediaType = it.mediaType,
+                nameOrTitle = if(it.title.isNullOrBlank()) it.name!! else it.title,
+                type = if(it.mediaType == "movie") ShowType.MOVIE else ShowType.TV)
+        }
+        Log.d("",tmdbListing[0].toString())
+        return tmdbListing
     }
 }
 

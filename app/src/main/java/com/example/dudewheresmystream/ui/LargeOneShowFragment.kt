@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dudewheresmystream.R
 import com.example.dudewheresmystream.api.*
+import com.example.dudewheresmystream.data.FixedRegionMap
 import com.example.dudewheresmystream.databinding.FragmentOneshowBinding
 import com.example.dudewheresmystream.glide.Glide
 
@@ -76,6 +77,12 @@ class LargeOneShowFragment(private val data: DiscoverVideoData): Fragment() {
         viewModel.observeProviders().observe(viewLifecycleOwner,
             Observer{
                 viewModel.scrapeLinks(it.tmdbURL)//posts to StreamData once network request resolves
+
+                //This is a bit of a mess; takes the available region codes and maps them to the correct Region name. Then sorts by those region names in alpha order. Then joins to a string items that have a key in FixedRegionMap
+                binding.availableRegionsTV.text = "Available for streaming in:\n${it.availableRegions
+                    .map { code -> FixedRegionMap[code] }
+                    .sortedBy {t -> t.toString()}
+                    .joinToString(separator = "") { name -> if(name.isNullOrBlank()) "" else "\t$name\n" }}"
             })
         viewModel.observeStreamData().observe(viewLifecycleOwner,
             Observer {

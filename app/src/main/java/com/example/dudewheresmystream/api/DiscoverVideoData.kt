@@ -19,6 +19,8 @@ data class DiscoverVideoData(
     val popularity: Float,
     @SerializedName("vote_average")
     val stars: Float,
+    @SerializedName("media_type")
+    val mediaType: String,
 
     val nameOrTitle: String,
     val type: ShowType
@@ -44,8 +46,8 @@ data class CreditsVideoData(
 )
 
 data class ProvidersVideoData(
-    @SerializedName("tmdbURL")
-    val tmdbURL: String?
+    val tmdbURL: String?,
+    val availableRegions: List<String>
 )
 
 data class CastInfo(

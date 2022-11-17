@@ -1,6 +1,10 @@
 # Dude-Wheres-My-Stream
 Final Project for Android Programming
 
+##v1.0.0
+everything is implemented and tested for planned initial feature rollout
+Next steps: some minor tidying up and then possibly move on to v2 features
+
 ##11/15/2022:2015
 settings are working and api calls are updated to include provider preferences and watch_region
 Next steps: search function!!!

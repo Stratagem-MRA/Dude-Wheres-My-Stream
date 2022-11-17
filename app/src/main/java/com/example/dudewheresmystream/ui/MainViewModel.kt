@@ -25,7 +25,6 @@ class MainViewModel: ViewModel() {
     private var oneShowCredits = MutableLiveData<CreditsVideoData>()
 
     private var searchData = MutableLiveData<List<DiscoverVideoData>>()
-    private var searchTerm = MutableLiveData<String>()
 
     private var region: MutableLiveData<SettingData> = MutableLiveData(SettingData("United States","US"))
     private var preferredProviders: MutableLiveData<List<SettingData>> = MutableLiveData(emptyList())
@@ -62,11 +61,20 @@ class MainViewModel: ViewModel() {
     }
 
     fun tmdbDetailClear(){
-        postProviders(ProvidersVideoData(""))
+        postProviders(ProvidersVideoData("", emptyList()))
         postStreamData(emptyList())
         postDetails(DetailsVideoData("","",ShowType.EMPTY))
         postCredits(CreditsVideoData(emptyList(), emptyList(),ShowType.EMPTY))
     }
+
+    fun tmdbSearchRefresh(query: String, page:Int = 1){
+        viewModelScope.launch(
+            context = viewModelScope.coroutineContext + Dispatchers.IO){
+            postSearch(tmdbRepo.getTMDBSearch(query,page))
+        }
+    }
+
+
 
     fun scrapeLinks(url: String?){
         viewModelScope.launch(
@@ -130,18 +138,12 @@ class MainViewModel: ViewModel() {
         return oneShowCredits
     }
 
-
-    fun search(){
-        //TODO
+    private fun postSearch(list: List<DiscoverVideoData>){
+        searchData.postValue(list)
     }
-    fun postSearchTerm(text: String){
-        searchTerm.value = text
-    }
-
     fun observeSearch(): MutableLiveData<List<DiscoverVideoData>> {
         return searchData
     }
-
 
     fun postRegion(data: SettingData){
         region.value = data

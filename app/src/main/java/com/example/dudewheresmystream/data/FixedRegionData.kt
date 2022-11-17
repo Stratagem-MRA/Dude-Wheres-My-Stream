@@ -2,6 +2,9 @@ package com.example.dudewheresmystream.data
 
 import com.example.dudewheresmystream.api.SettingData
 
+//FixedRegionData includes only countries listed as available watch regions from the TMDb api. However some regions will show up in the data that are not in that list.
+// Thus all countries are listed in FixedRegionMap
+
 val FixedRegionData = listOf<SettingData>(
     SettingData("None/Other",""),
     SettingData("Argentina","AR"),
@@ -47,4 +50,50 @@ val FixedRegionData = listOf<SettingData>(
     SettingData("United Arab Emirates","AE"),
     SettingData("United Kingdom","GB"),
     SettingData("United States of America","US"),
+    )
+
+val FixedRegionMap = hashMapOf(
+    Pair("AR","Argentina"),
+    Pair("AU","Australia"),
+    Pair("AT","Austria"),
+    Pair("BE","Belgium"),
+    Pair("BR","Brazil"),
+    Pair("BG","Bulgaria"),
+    Pair("CA","Canada"),
+    Pair("CI","Cote D'Ivoire"),
+    Pair("HR","Croatia"),
+    Pair("CZ","Czech Republic"),
+    Pair("DK","Denmark"),
+    Pair("EE","Estonia"),
+    Pair("FI","Finland"),
+    Pair("FR","France"),
+    Pair("DE","Germany"),
+    Pair("HK","Hong Kong"),
+    Pair("HU","Hungary"),
+    Pair("IN","India"),
+    Pair("ID","Indonesia"),
+    Pair("IE","Ireland"),
+    Pair("IT","Italy"),
+    Pair("JP","Japan"),
+    Pair("KE","Kenya"),
+    Pair("LT","Lithuania"),
+    Pair("MX","Mexico"),
+    Pair("NL","Netherlands"),
+    Pair("NZ","New Zealand"),
+    Pair("NO","Norway"),
+    Pair("PH","Philippines"),
+    Pair("PL","Poland"),
+    Pair("PT","Portugal"),
+    Pair("RU","Russia"),
+    Pair("RS","Serbia"),
+    Pair("SK","Slovakia"),
+    Pair("ZA","South Africa"),
+    Pair("KR","South Korea"),
+    Pair("ES","Spain"),
+    Pair("SE","Sweden"),
+    Pair("CH","Switzerland"),
+    Pair("TR","Turkey"),
+    Pair("AE","United Arab Emirates"),
+    Pair("GB","United Kingdom"),
+    Pair("US","United States of America")
     )

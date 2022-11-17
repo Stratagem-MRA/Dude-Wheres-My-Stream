@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dudewheresmystream.R
 import com.example.dudewheresmystream.databinding.FragmentListingBinding
 
-class SearchFragment():Fragment() {
+class SearchFragment(private val initialText: String):Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentListingBinding? = null
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance(): SearchFragment {
-            return SearchFragment()
+        fun newInstance(text: String): SearchFragment {
+            return SearchFragment(text)
         }
     }
 
@@ -42,6 +42,10 @@ class SearchFragment():Fragment() {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 addToBackStack("OneShow")
             }
+            viewModel.tmdbDetailRefresh(it)
+        }
+        if(!initialText.isNullOrBlank()){
+            viewModel.tmdbSearchRefresh(initialText)
         }
         return adapter
     }
@@ -58,6 +62,12 @@ class SearchFragment():Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val rvAdapter = initAdapter(binding)
-        //TODO what is this doing?
+        if (initialText.isNotEmpty()){
+            search(initialText)
+        }
+    }
+
+    private fun search(text: String) {
+
     }
 }
