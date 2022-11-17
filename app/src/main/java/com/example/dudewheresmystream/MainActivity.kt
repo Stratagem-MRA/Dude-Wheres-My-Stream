@@ -1,5 +1,6 @@
 package com.example.dudewheresmystream
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.ActionBar
 import android.os.Bundle
@@ -17,11 +18,21 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
+import androidx.lifecycle.Observer
 import com.example.dudewheresmystream.api.DiscoverVideoData
 import com.example.dudewheresmystream.api.ShowType
 import com.example.dudewheresmystream.databinding.ActionBarBinding
 import com.example.dudewheresmystream.databinding.ActivityMainBinding
 import com.example.dudewheresmystream.ui.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutput
+import java.io.ObjectOutputStream
+import java.io.OutputStream
+import java.io.OutputStreamWriter
 
 class MainActivity : AppCompatActivity(){
     companion object {
@@ -103,6 +114,7 @@ class MainActivity : AppCompatActivity(){
         })
         addHomeFragment()
         actionBarSearch()
+        initLocalFavorites()
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (drawerToggle.onOptionsItemSelected(item)){
@@ -116,6 +128,32 @@ class MainActivity : AppCompatActivity(){
         imm.hideSoftInputFromWindow(window.decorView.rootView.windowToken, 0)
         actionBarBinding!!.actionSearch.clearFocus()
         actionBarBinding!!.actionSearch.isCursorVisible = false
+    }
+    private fun initLocalFavorites(){
+        val fileName = "favoritesInfo.data"
+        val path = applicationContext.filesDir
+        val directory = File(path,"FavoritesDir")
+        directory.mkdirs()
+        val file = File(directory, fileName)
+        Log.d("","${file.exists()}")
+        if(!file.exists()){
+            file.createNewFile()
+        }
+        viewModel.observeFavorites().observe(this,
+        Observer { favoritesPostList ->
+            ObjectOutputStream(FileOutputStream(file)).use{
+                it.writeObject(favoritesPostList)
+            }
+        })
+        if(!file.readText().isEmpty()) {
+            ObjectInputStream(FileInputStream(file)).use {
+                val favorites = it.readObject()
+                when (favorites) {
+                    is List<*> -> viewModel.postAllFavorites(favorites as List<DiscoverVideoData>)//Is this safe IDK not sure how to do this properly
+                    else -> true
+                }
+            }
+        }
     }
     private fun initActionBar(actionBar: ActionBar){
         actionBar.setDisplayShowTitleEnabled(false)
@@ -209,5 +247,7 @@ class MainActivity : AppCompatActivity(){
             addToBackStack(aboutFragTag)
         }
     }
+
+
     //TODO v2 feature: add a see more link at the end of the trending and favorite RVs
 }

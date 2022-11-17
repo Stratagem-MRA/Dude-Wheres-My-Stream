@@ -25,7 +25,43 @@ data class DiscoverVideoData(
     val nameOrTitle: String,
     val type: ShowType
 
-): java.io.Serializable
+): java.io.Serializable {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as DiscoverVideoData
+
+        if (name != other.name) return false
+        if (title != other.title) return false
+        if (genreIDs != other.genreIDs) return false
+        if (thumbnailURL != other.thumbnailURL) return false
+        if (description != other.description) return false
+        if (tmdbID != other.tmdbID) return false
+        if (popularity != other.popularity) return false
+        if (stars != other.stars) return false
+        if (mediaType != other.mediaType) return false
+        if (nameOrTitle != other.nameOrTitle) return false
+        if (type != other.type) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name?.hashCode() ?: 0
+        result = 31 * result + (title?.hashCode() ?: 0)
+        result = 31 * result + genreIDs.hashCode()
+        result = 31 * result + thumbnailURL.hashCode()
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + tmdbID
+        result = 31 * result + popularity.hashCode()
+        result = 31 * result + stars.hashCode()
+        result = 31 * result + mediaType.hashCode()
+        result = 31 * result + nameOrTitle.hashCode()
+        result = 31 * result + type.hashCode()
+        return result
+    }
+}
 
 data class DetailsVideoData(
     @SerializedName("release_date")

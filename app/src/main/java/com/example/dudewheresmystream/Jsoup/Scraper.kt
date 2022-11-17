@@ -16,10 +16,6 @@ data class OneStreamData(
 )
 
 class Scraper {
-    //TODO probably need to credit JustWatch where links are provided
-
-
-
     fun extract(url: String?): List<OneStreamData> {
         if (url.isNullOrBlank()) {
             return emptyList()

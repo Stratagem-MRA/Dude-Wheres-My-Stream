@@ -83,6 +83,9 @@ class MainViewModel: ViewModel() {
         }
     }
 
+    fun postAllFavorites(list: List<DiscoverVideoData>){
+        favorites.value = list.toMutableList()
+    }
     fun postFavorite(show: DiscoverVideoData){
         favorites.value!!.add(show)
         favorites.value = favorites.value
